@@ -21,7 +21,6 @@ struct DrawView: View {
                     ToolbarItem(placement: .navigationBarLeading) {
                         Button(action: {
                             penViewInstance.undo()
-                            
                         }) {
                             Image(systemName: "arrowshape.turn.up.backward.circle")
                         }
