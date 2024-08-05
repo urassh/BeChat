@@ -25,6 +25,7 @@
 		102B20662C60786B00DCE393 /* AuthenticatedUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 102B20652C60786B00DCE393 /* AuthenticatedUser.swift */; };
 		102B20682C607B0600DCE393 /* AuthProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 102B20672C607B0600DCE393 /* AuthProtocol.swift */; };
 		102B206B2C607C9F00DCE393 /* MessageStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 102B206A2C607C9F00DCE393 /* MessageStore.swift */; };
+		1067507E2C609F2E0035537F /* DrawView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1067507D2C609F2E0035537F /* DrawView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,7 @@
 		102B20652C60786B00DCE393 /* AuthenticatedUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticatedUser.swift; sourceTree = "<group>"; };
 		102B20672C607B0600DCE393 /* AuthProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthProtocol.swift; sourceTree = "<group>"; };
 		102B206A2C607C9F00DCE393 /* MessageStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageStore.swift; sourceTree = "<group>"; };
+		1067507D2C609F2E0035537F /* DrawView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +81,7 @@
 		102B203D2C60722B00DCE393 /* BeChat */ = {
 			isa = PBXGroup;
 			children = (
+				1067507C2C609F1D0035537F /* View */,
 				102B203E2C60722B00DCE393 /* BeChatApp.swift */,
 				102B20402C60722B00DCE393 /* ContentView.swift */,
 				102B20422C60722C00DCE393 /* Assets.xcassets */,
@@ -123,6 +126,14 @@
 				102B206A2C607C9F00DCE393 /* MessageStore.swift */,
 			);
 			path = Firebase;
+			sourceTree = "<group>";
+		};
+		1067507C2C609F1D0035537F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				1067507D2C609F2E0035537F /* DrawView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -211,6 +222,7 @@
 			files = (
 				102B20412C60722B00DCE393 /* ContentView.swift in Sources */,
 				102B20682C607B0600DCE393 /* AuthProtocol.swift in Sources */,
+				1067507E2C609F2E0035537F /* DrawView.swift in Sources */,
 				102B20662C60786B00DCE393 /* AuthenticatedUser.swift in Sources */,
 				102B206B2C607C9F00DCE393 /* MessageStore.swift in Sources */,
 				102B20642C60782100DCE393 /* Message.swift in Sources */,
