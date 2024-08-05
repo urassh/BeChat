@@ -24,6 +24,8 @@
 		102B20642C60782100DCE393 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 102B20632C60782100DCE393 /* Message.swift */; };
 		102B20662C60786B00DCE393 /* AuthenticatedUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 102B20652C60786B00DCE393 /* AuthenticatedUser.swift */; };
 		102B20682C607B0600DCE393 /* AuthProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 102B20672C607B0600DCE393 /* AuthProtocol.swift */; };
+		726A71572C609152009D2CF5 /* MessageListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 726A71562C609152009D2CF5 /* MessageListView.swift */; };
+		726A71592C609553009D2CF5 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 726A71582C609553009D2CF5 /* MessageView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +39,8 @@
 		102B20632C60782100DCE393 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		102B20652C60786B00DCE393 /* AuthenticatedUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticatedUser.swift; sourceTree = "<group>"; };
 		102B20672C607B0600DCE393 /* AuthProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthProtocol.swift; sourceTree = "<group>"; };
+		726A71562C609152009D2CF5 /* MessageListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageListView.swift; sourceTree = SOURCE_ROOT; };
+		726A71582C609553009D2CF5 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +81,7 @@
 		102B203D2C60722B00DCE393 /* BeChat */ = {
 			isa = PBXGroup;
 			children = (
+				726A71552C609139009D2CF5 /* MessageListView */,
 				102B203E2C60722B00DCE393 /* BeChatApp.swift */,
 				102B20402C60722B00DCE393 /* ContentView.swift */,
 				102B20422C60722C00DCE393 /* Assets.xcassets */,
@@ -112,6 +117,15 @@
 				102B20652C60786B00DCE393 /* AuthenticatedUser.swift */,
 			);
 			path = DataModel;
+			sourceTree = "<group>";
+		};
+		726A71552C609139009D2CF5 /* MessageListView */ = {
+			isa = PBXGroup;
+			children = (
+				726A71562C609152009D2CF5 /* MessageListView.swift */,
+				726A71582C609553009D2CF5 /* MessageView.swift */,
+			);
+			path = MessageListView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -199,6 +213,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				102B20412C60722B00DCE393 /* ContentView.swift in Sources */,
+				726A71572C609152009D2CF5 /* MessageListView.swift in Sources */,
+				726A71592C609553009D2CF5 /* MessageView.swift in Sources */,
 				102B20682C607B0600DCE393 /* AuthProtocol.swift in Sources */,
 				102B20662C60786B00DCE393 /* AuthenticatedUser.swift in Sources */,
 				102B20642C60782100DCE393 /* Message.swift in Sources */,
@@ -337,7 +353,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"BeChat/Preview Content\"";
-				DEVELOPMENT_TEAM = NJ55RU4U3A;
+				DEVELOPMENT_TEAM = TVH687AC7F;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -345,6 +361,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -366,7 +383,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"BeChat/Preview Content\"";
-				DEVELOPMENT_TEAM = NJ55RU4U3A;
+				DEVELOPMENT_TEAM = TVH687AC7F;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -374,6 +391,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
