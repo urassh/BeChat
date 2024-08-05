@@ -24,6 +24,7 @@
 		102B20642C60782100DCE393 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 102B20632C60782100DCE393 /* Message.swift */; };
 		102B20662C60786B00DCE393 /* AuthenticatedUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 102B20652C60786B00DCE393 /* AuthenticatedUser.swift */; };
 		102B20682C607B0600DCE393 /* AuthProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 102B20672C607B0600DCE393 /* AuthProtocol.swift */; };
+		102B206B2C607C9F00DCE393 /* MessageStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 102B206A2C607C9F00DCE393 /* MessageStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,7 @@
 		102B20632C60782100DCE393 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		102B20652C60786B00DCE393 /* AuthenticatedUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticatedUser.swift; sourceTree = "<group>"; };
 		102B20672C607B0600DCE393 /* AuthProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthProtocol.swift; sourceTree = "<group>"; };
+		102B206A2C607C9F00DCE393 /* MessageStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +82,7 @@
 				102B203E2C60722B00DCE393 /* BeChatApp.swift */,
 				102B20402C60722B00DCE393 /* ContentView.swift */,
 				102B20422C60722C00DCE393 /* Assets.xcassets */,
+				102B20692C607C3D00DCE393 /* Firebase */,
 				102B20622C6077EC00DCE393 /* DataModel */,
 				102B205F2C6077C000DCE393 /* Protocols */,
 				102B20442C60722C00DCE393 /* Preview Content */,
@@ -112,6 +115,14 @@
 				102B20652C60786B00DCE393 /* AuthenticatedUser.swift */,
 			);
 			path = DataModel;
+			sourceTree = "<group>";
+		};
+		102B20692C607C3D00DCE393 /* Firebase */ = {
+			isa = PBXGroup;
+			children = (
+				102B206A2C607C9F00DCE393 /* MessageStore.swift */,
+			);
+			path = Firebase;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -201,6 +212,7 @@
 				102B20412C60722B00DCE393 /* ContentView.swift in Sources */,
 				102B20682C607B0600DCE393 /* AuthProtocol.swift in Sources */,
 				102B20662C60786B00DCE393 /* AuthenticatedUser.swift in Sources */,
+				102B206B2C607C9F00DCE393 /* MessageStore.swift in Sources */,
 				102B20642C60782100DCE393 /* Message.swift in Sources */,
 				102B20612C6077E500DCE393 /* MessageProtocol.swift in Sources */,
 				102B203F2C60722B00DCE393 /* BeChatApp.swift in Sources */,
