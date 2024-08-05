@@ -9,7 +9,7 @@ import Foundation
 
 protocol MessageProtocol {
     func send(with message: any Message)
-    func getAll() async -> [TextMessage]
+    func fetchAll(completion: @escaping (Result<[TextMessage], Error>) -> Void)
     func getTextMessage(id: String) async -> TextMessage?
     func getImageMessage(id: String) async -> ImageMessage?
 }

@@ -9,11 +9,12 @@ import Foundation
 import FirebaseFirestore
 import FirebaseStorage
 
-class MessageStore : MessageProtocol {
+class MessageStore: MessageProtocol {
     private let db = Firestore.firestore()
     private let storage = Storage.storage()
     private let COLLECTION = "messages"
     private let STORAGE_URL = "gs://bechat-0811.appspot.com/image_message"
+    private var listener: ListenerRegistration?
     
     func send(with message: any Message) {
         if message is TextMessage {
@@ -25,21 +26,26 @@ class MessageStore : MessageProtocol {
         }
     }
     
-    func getAll() async -> [TextMessage] {
-        let ref = db.collection(COLLECTION)
-        
-        do {
-            return try await ref.getDocuments()
-                        .documents
-                        .compactMap { try? $0.data(as: TextMessage.self)}
-        } catch {
-            print("Error Writing Document: \(error)")
+    func fetchAll(completion: @escaping (Result<[TextMessage], Error>) -> Void) {
+        listener = db.collection(COLLECTION).addSnapshotListener { querySnapshot, error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            
+            guard let documents = querySnapshot?.documents else {
+                completion(.success([]))
+                return
+            }
+            
+            let messages = documents.compactMap { queryDocumentSnapshot in
+                try? queryDocumentSnapshot.data(as: TextMessage.self)
+            }
+            completion(.success(messages))
         }
-        
-        return []
     }
     
-    internal func getTextMessage(id: String) async -> TextMessage? {
+    func getTextMessage(id: String) async -> TextMessage? {
         let docRef = db.collection(COLLECTION).document(id)
         do {
             return try await docRef.getDocument(as: TextMessage.self)
@@ -50,7 +56,7 @@ class MessageStore : MessageProtocol {
         return nil
     }
     
-    internal func getImageMessage(id: String) async -> ImageMessage? {
+    func getImageMessage(id: String) async -> ImageMessage? {
         let ref = storage.reference(forURL: STORAGE_URL).child(id)
         
         guard let message: TextMessage = await getTextMessage(id: id) else { return nil }
@@ -104,5 +110,9 @@ class MessageStore : MessageProtocol {
     
     private func convertToJpegData(uiImage: UIImage) -> NSData? {
         return uiImage.jpegData(compressionQuality: 0.1) as? NSData
+    }
+    
+    deinit {
+        listener?.remove()
     }
 }
