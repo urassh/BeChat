@@ -79,7 +79,7 @@
 		102B203D2C60722B00DCE393 /* BeChat */ = {
 			isa = PBXGroup;
 			children = (
-				729D19D42C60832100456771 /* DrawView */,
+				729D19D72C6084FC00456771 /* View */,
 				102B203E2C60722B00DCE393 /* BeChatApp.swift */,
 				102B20402C60722B00DCE393 /* ContentView.swift */,
 				102B20422C60722C00DCE393 /* Assets.xcassets */,
@@ -123,6 +123,14 @@
 				729D19D52C60833200456771 /* DrawView.swift */,
 			);
 			path = DrawView;
+			sourceTree = "<group>";
+		};
+		729D19D72C6084FC00456771 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				729D19D42C60832100456771 /* DrawView */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
