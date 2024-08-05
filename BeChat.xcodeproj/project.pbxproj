@@ -12,6 +12,7 @@
 		102B20432C60722C00DCE393 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 102B20422C60722C00DCE393 /* Assets.xcassets */; };
 		102B20462C60722C00DCE393 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 102B20452C60722C00DCE393 /* Preview Assets.xcassets */; };
 		102B204D2C60730300DCE393 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 102B204C2C60730300DCE393 /* GoogleService-Info.plist */; };
+		729D19D32C60779300456771 /* DrawView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 729D19D22C60779300456771 /* DrawView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +22,7 @@
 		102B20422C60722C00DCE393 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		102B20452C60722C00DCE393 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		102B204C2C60730300DCE393 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		729D19D22C60779300456771 /* DrawView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +55,7 @@
 		102B203D2C60722B00DCE393 /* BeChat */ = {
 			isa = PBXGroup;
 			children = (
+				729D19D12C60777C00456771 /* DrawView */,
 				102B203E2C60722B00DCE393 /* BeChatApp.swift */,
 				102B20402C60722B00DCE393 /* ContentView.swift */,
 				102B20422C60722C00DCE393 /* Assets.xcassets */,
@@ -68,6 +71,14 @@
 				102B20452C60722C00DCE393 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		729D19D12C60777C00456771 /* DrawView */ = {
+			isa = PBXGroup;
+			children = (
+				729D19D22C60779300456771 /* DrawView.swift */,
+			);
+			path = DrawView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -143,6 +154,7 @@
 			files = (
 				102B20412C60722B00DCE393 /* ContentView.swift in Sources */,
 				102B203F2C60722B00DCE393 /* BeChatApp.swift in Sources */,
+				729D19D32C60779300456771 /* DrawView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -284,6 +296,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -313,6 +326,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

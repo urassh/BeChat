@@ -11,7 +11,7 @@ import SwiftUI
 struct BeChatApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            DrawView()
         }
     }
 }
