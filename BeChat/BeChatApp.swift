@@ -5,15 +5,15 @@
 //  Created by 浦山秀斗 on 2024/08/05.
 //
 
-import FirebaseCore
 import SwiftUI
+import FirebaseCore
 
 @main
 struct BeChatApp: App {
-    init() {
+    init(){
         FirebaseApp.configure()
     }
-
+    
     var body: some Scene {
         WindowGroup {
             ContentView()

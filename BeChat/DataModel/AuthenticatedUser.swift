@@ -12,7 +12,7 @@ struct AppUser {
     let name: String
 }
 
-struct AuthenticatedUser: Codable {
+struct AuthenticatedUser : Codable {
     let uid: String
     let name: String
 }
