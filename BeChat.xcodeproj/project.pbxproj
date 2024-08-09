@@ -26,6 +26,7 @@
 		102B20682C607B0600DCE393 /* AuthProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 102B20672C607B0600DCE393 /* AuthProtocol.swift */; };
 		726A71572C609152009D2CF5 /* MessageListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 726A71562C609152009D2CF5 /* MessageListView.swift */; };
 		726A71592C609553009D2CF5 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 726A71582C609553009D2CF5 /* MessageView.swift */; };
+		72A8E8D62C659A320058AA93 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A8E8D52C659A320058AA93 /* ChatView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,8 +40,9 @@
 		102B20632C60782100DCE393 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		102B20652C60786B00DCE393 /* AuthenticatedUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticatedUser.swift; sourceTree = "<group>"; };
 		102B20672C607B0600DCE393 /* AuthProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthProtocol.swift; sourceTree = "<group>"; };
-		726A71562C609152009D2CF5 /* MessageListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageListView.swift; sourceTree = SOURCE_ROOT; };
+		726A71562C609152009D2CF5 /* MessageListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MessageListView.swift; path = BeChat/MessageListView/MessageListView.swift; sourceTree = SOURCE_ROOT; };
 		726A71582C609553009D2CF5 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
+		72A8E8D52C659A320058AA93 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +83,7 @@
 		102B203D2C60722B00DCE393 /* BeChat */ = {
 			isa = PBXGroup;
 			children = (
+				72A8E8D42C659A210058AA93 /* ChatView */,
 				726A71552C609139009D2CF5 /* MessageListView */,
 				102B203E2C60722B00DCE393 /* BeChatApp.swift */,
 				102B20402C60722B00DCE393 /* ContentView.swift */,
@@ -126,6 +129,14 @@
 				726A71582C609553009D2CF5 /* MessageView.swift */,
 			);
 			path = MessageListView;
+			sourceTree = "<group>";
+		};
+		72A8E8D42C659A210058AA93 /* ChatView */ = {
+			isa = PBXGroup;
+			children = (
+				72A8E8D52C659A320058AA93 /* ChatView.swift */,
+			);
+			path = ChatView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -216,6 +227,7 @@
 				726A71572C609152009D2CF5 /* MessageListView.swift in Sources */,
 				726A71592C609553009D2CF5 /* MessageView.swift in Sources */,
 				102B20682C607B0600DCE393 /* AuthProtocol.swift in Sources */,
+				72A8E8D62C659A320058AA93 /* ChatView.swift in Sources */,
 				102B20662C60786B00DCE393 /* AuthenticatedUser.swift in Sources */,
 				102B20642C60782100DCE393 /* Message.swift in Sources */,
 				102B20612C6077E500DCE393 /* MessageProtocol.swift in Sources */,
