@@ -8,15 +8,15 @@
 import Foundation
 
 struct AppUser {
-    let uid: String
-    let name: String
+  let uid: String
+  let name: String
 }
 
-struct AuthenticatedUser : Codable {
-    let uid: String
-    let name: String
+struct AuthenticatedUser: Codable {
+  let uid: String
+  let name: String
 }
 
 struct UnAuthenticatedUser {
-    let name: String
+  let name: String
 }

@@ -8,21 +8,20 @@
 import Foundation
 import UIKit
 
-protocol Message : Identifiable {
-    
+protocol Message: Identifiable {
+
 }
 
-struct TextMessage : Message, Codable {
-    let id: UUID
-    let from_id: String
-    let to_id: String
-    let contents: String
+struct TextMessage: Message, Codable {
+  let id: UUID
+  let from_id: String
+  let to_id: String
+  let contents: String
 }
 
 struct ImageMessage: Message {
-    let id: UUID
-    let from_id: String
-    let to_id: String
-    let image: UIImage?
+  let id: UUID
+  let from_id: String
+  let to_id: String
+  let image: UIImage?
 }
-

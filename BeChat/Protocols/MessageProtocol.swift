@@ -8,7 +8,7 @@
 import Foundation
 
 protocol MessageProtocol {
-    func send(with message: any Message, to user: AppUser)
-    func getAll() -> [any Message]
-    func get() -> any Message
+  func send(with message: any Message, to user: AppUser)
+  func getAll() -> [any Message]
+  func get() -> any Message
 }
