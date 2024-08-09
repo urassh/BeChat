@@ -9,11 +9,13 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        DrawView()
+        NavigationStack {
+            HomeView()
+                .navigationTitle("BeChat")
+        }
     }
 }
 
 #Preview {
     ContentView()
 }
-

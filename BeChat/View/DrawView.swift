@@ -5,15 +5,15 @@
 //  Created by 浦山秀斗 on 2024/08/05.
 //
 
-import SwiftUI
 import PencilKit
+import SwiftUI
 
 struct DrawView: View {
     @State private var penViewInstance = PenView()
-    @State private var image : UIImage = UIImage(named: "sample")!
-    
+    @State private var image: UIImage = UIImage(named: "sample")!
+
     var body: some View {
-        NavigationView{
+        NavigationView {
             penViewInstance
                 .toolbar {
 
@@ -28,9 +28,9 @@ struct DrawView: View {
                     //送信
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button(action: {
-                            image =  penViewInstance.saveImage()
+                            image = penViewInstance.saveImage()
 
-                        }){
+                        }) {
                             Image(systemName: "paperplane.fill")
                         }
                     }
@@ -38,7 +38,6 @@ struct DrawView: View {
         }
     }
 }
-
 
 struct PenView: UIViewRepresentable {
     func makeCoordinator() -> Coordinator {
@@ -70,18 +69,18 @@ struct PenView: UIViewRepresentable {
 
         return pkcView
     }
-    
-    func undo(){
+
+    func undo() {
         if let undoManager = self.pkcView.undoManager {
             undoManager.undo()
         }
     }
-    
+
     func saveImage() -> UIImage {
-        let data  =  pkcView.drawing.dataRepresentation()
+        let data = pkcView.drawing.dataRepresentation()
         return UIImage(data: data)!
     }
-    
+
     func updateUIView(_ uiView: PKCanvasView, context: Context) {
     }
 }
