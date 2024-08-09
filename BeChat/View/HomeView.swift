@@ -21,6 +21,8 @@ struct HomeView: View {
             Text("さぁあなたも始めよう")
                 .font(.headline)
                 .fontWeight(.semibold)
+            
+            Spacer()
 
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 20) {
