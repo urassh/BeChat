@@ -14,29 +14,29 @@ struct DrawView: View {
 
     var body: some View {
 
-            penViewInstance
-                .toolbar {
+        penViewInstance
+            .toolbar {
 
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        Button(action: {
-                            penViewInstance.undo()
-                        }) {
-                            Image(systemName: "arrowshape.turn.up.backward.circle")
-                        }
-                    }
-
-                    //送信
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button(action: {
-                            image = penViewInstance.saveImage()
-
-                        }) {
-                            Image(systemName: "paperplane.fill")
-                        }
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button(action: {
+                        penViewInstance.undo()
+                    }) {
+                        Image(systemName: "arrowshape.turn.up.backward.circle")
                     }
                 }
-        }
-    
+
+                //送信
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: {
+                        image = penViewInstance.saveImage()
+
+                    }) {
+                        Image(systemName: "paperplane.fill")
+                    }
+                }
+            }
+    }
+
 }
 
 struct PenView: UIViewRepresentable {

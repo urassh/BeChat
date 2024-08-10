@@ -22,7 +22,7 @@ struct HomeView: View {
             Text("さぁあなたも始めよう")
                 .font(.headline)
                 .fontWeight(.semibold)
-            
+
             Spacer()
 
             ScrollView(.horizontal, showsIndicators: false) {
@@ -36,7 +36,7 @@ struct HomeView: View {
                 }
                 .padding()
             }
-            
+
             NavigationLink(destination: DrawView()) {
                 Image(systemName: "paperplane.fill")
                     .resizable()
@@ -51,9 +51,11 @@ struct HomeView: View {
             }
 
             Spacer()
-                .sheet(isPresented: $isTapped, content: {
-                    ChatView()
-                })
+                .sheet(
+                    isPresented: $isTapped,
+                    content: {
+                        ChatView()
+                    })
 
         }
     }
