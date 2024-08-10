@@ -9,23 +9,33 @@ import SwiftUI
 
 struct MessageListView: View {
   @State var messages = [String()]
+  @State var isTapMessage = false
   var body: some View {
     NavigationView {
       VStack {
 
-        MessageView(iconSize: .constant(50))
+        MessageImageView(iconSize: .constant(50))
           .frame(width: 270, height: 480)
           .aspectRatio(contentMode: .fit)
           .navigationTitle("BeChat")
           .padding(10)
+          .onTapGesture {
+            isTapMessage = true
+          }
         ScrollView(.horizontal) {
           HStack {
             ForEach(messages, id: \.self) { name in
-              MessageView(iconSize: .constant(30.0))
+              MessageImageView(iconSize: .constant(30.0))
                 .aspectRatio(contentMode: .fit)
             }
           }
         }
+        .sheet(
+          isPresented: $isTapMessage,
+          content: {
+            ChatView()
+          }
+        )
         .padding(.horizontal, 30)
 
       }

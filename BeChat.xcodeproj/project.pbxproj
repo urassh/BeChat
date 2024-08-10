@@ -25,7 +25,7 @@
 		102B20662C60786B00DCE393 /* AuthenticatedUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 102B20652C60786B00DCE393 /* AuthenticatedUser.swift */; };
 		102B20682C607B0600DCE393 /* AuthProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 102B20672C607B0600DCE393 /* AuthProtocol.swift */; };
 		726A71572C609152009D2CF5 /* MessageListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 726A71562C609152009D2CF5 /* MessageListView.swift */; };
-		726A71592C609553009D2CF5 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 726A71582C609553009D2CF5 /* MessageView.swift */; };
+		726A71592C609553009D2CF5 /* MessageImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 726A71582C609553009D2CF5 /* MessageImageView.swift */; };
 		72A8E8D62C659A320058AA93 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A8E8D52C659A320058AA93 /* ChatView.swift */; };
 /* End PBXBuildFile section */
 
@@ -41,7 +41,7 @@
 		102B20652C60786B00DCE393 /* AuthenticatedUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticatedUser.swift; sourceTree = "<group>"; };
 		102B20672C607B0600DCE393 /* AuthProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthProtocol.swift; sourceTree = "<group>"; };
 		726A71562C609152009D2CF5 /* MessageListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MessageListView.swift; path = BeChat/MessageListView/MessageListView.swift; sourceTree = SOURCE_ROOT; };
-		726A71582C609553009D2CF5 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
+		726A71582C609553009D2CF5 /* MessageImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageImageView.swift; sourceTree = "<group>"; };
 		72A8E8D52C659A320058AA93 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -126,7 +126,7 @@
 			isa = PBXGroup;
 			children = (
 				726A71562C609152009D2CF5 /* MessageListView.swift */,
-				726A71582C609553009D2CF5 /* MessageView.swift */,
+				726A71582C609553009D2CF5 /* MessageImageView.swift */,
 			);
 			path = MessageListView;
 			sourceTree = "<group>";
@@ -225,7 +225,7 @@
 			files = (
 				102B20412C60722B00DCE393 /* ContentView.swift in Sources */,
 				726A71572C609152009D2CF5 /* MessageListView.swift in Sources */,
-				726A71592C609553009D2CF5 /* MessageView.swift in Sources */,
+				726A71592C609553009D2CF5 /* MessageImageView.swift in Sources */,
 				102B20682C607B0600DCE393 /* AuthProtocol.swift in Sources */,
 				72A8E8D62C659A320058AA93 /* ChatView.swift in Sources */,
 				102B20662C60786B00DCE393 /* AuthenticatedUser.swift in Sources */,

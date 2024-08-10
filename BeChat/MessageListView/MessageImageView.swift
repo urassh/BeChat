@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MessageView: View {
+struct MessageImageView: View {
   @Binding var iconSize: CGFloat
   var body: some View {
 
@@ -40,5 +40,5 @@ struct MessageView: View {
   }
 }
 #Preview {
-  MessageView(iconSize: .constant(50.0))
+  MessageImageView(iconSize: .constant(50.0))
 }
