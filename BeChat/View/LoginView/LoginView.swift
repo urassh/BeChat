@@ -17,7 +17,12 @@ struct LoginView: View {
         }
         else {
             VStack {
+                Text("BeChat")
+                    .font(.custom("Shrikhand-Regular", size: 90))
+                    .padding()
                 TextField("名前を入力", text: $name)
+                    .textFieldStyle(.roundedBorder)
+                    .padding()
 
                 Button(
                     action: {
@@ -27,6 +32,7 @@ struct LoginView: View {
                     },
                     label: {
                         Text("Login")
+                            .padding()
                     })
             }
         }
