@@ -17,30 +17,31 @@ struct HomeView: View {
     @State var uid = Auth.auth().currentUser?.uid ?? ""
     @State private var chats = [Chat]()
     @State var names = [String: String]()
+    @State var isFriend = false
     var body: some View {
         NavigationView {
             VStack {
                 Divider()
-
+                
                 Spacer()
-
+                
                 Text("今日のChatter")
                     .font(.largeTitle)
                     .fontWeight(.heavy)
-
+                
                 Text("さぁあなたも始めよう")
                     .font(.headline)
                     .fontWeight(.semibold)
-
+                
                 Spacer()
-
+                
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 20) {
                         ForEach(chats) { chat in
                             let partnerId = chat.from_id == uid ? chat.to_id : chat.from_id
                             let partnerName = names[partnerId] ?? "Loading...！"
                             let imageUrl = chat.last_image
-
+                            
                             CardView(name: .constant(partnerName), imageURL: .constant(imageUrl))
                                 .onTapGesture {
                                     if chat.from_id != uid {
@@ -55,7 +56,9 @@ struct HomeView: View {
                     }
                     .padding()
                 }
-
+                
+                
+                
                 NavigationLink(destination: DrawView()) {
                     Image(systemName: "paperplane.fill")
                         .resizable()
@@ -68,7 +71,7 @@ struct HomeView: View {
                         .shadow(radius: 10)
                         .padding(.top, 80)
                 }
-
+                
                 Spacer()
                     .sheet(
                         isPresented: $isTapped,
@@ -76,24 +79,40 @@ struct HomeView: View {
                             ChatView(partner: $partner)
                         }
                     )
-
+                    .sheet(  isPresented: $isFriend, content:{
+                        FriendView()
+                    }
+                    )
+                
                     .onAppear {
-
+                        
                         messageRepository.fetchChatAll(for: uid) { result in
                             switch result {
                             case .success(let messages):
                                 DispatchQueue.main.async {
                                     self.chats = messages
                                     getNames()
-
+                                    
                                 }
                             case .failure(let error):
                                 print("Error fetching messages: \(error)")
                             }
                         }
                     }
-
+                    .toolbar {
+                        
+                        ToolbarItem(placement: .navigationBarLeading) {
+                            Button(action: {
+                                isFriend = true
+                                
+                            }) {
+                                Image(systemName: "person.fill.badge.plus")
+                            }
+                        }
+                    }
+                
             }
+            
         }
     }
     private func getNames() {
@@ -108,19 +127,17 @@ struct HomeView: View {
                         print("Fetched name: \(name) for partnerId: \(partnerId)")
                     }
                 }
-
+                
                 // names への代入前にデバッグ情報を追加
                 DispatchQueue.main.async {
-                    print("Assigning names: \(nameDict)")
+                    
                     names = nameDict
                 }
             }
-            catch {
-                print("Error fetching names: \(error)")
-            }
+            
         }
     }
-
+    
 }
 
 #Preview {

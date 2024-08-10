@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct AppUser {
+struct AppUser: Decodable,Encodable {
     let uid: String
     let name: String
 }

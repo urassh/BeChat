@@ -35,6 +35,9 @@
 		72A8E8E32C6767860058AA93 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A8E8E22C6767860058AA93 /* LoginView.swift */; };
 		72A8E8E72C6773760058AA93 /* Shrikhand-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 72A8E8E62C6773760058AA93 /* Shrikhand-Regular.otf */; };
 		72A8E8EA2C6795630058AA93 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A8E8E92C6795630058AA93 /* Chat.swift */; };
+		72A8E8ED2C68206A0058AA93 /* FriendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A8E8EC2C68206A0058AA93 /* FriendView.swift */; };
+		72A8E8EF2C6821C60058AA93 /* FriendProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A8E8EE2C6821C60058AA93 /* FriendProtocol.swift */; };
+		72A8E8F12C6821D60058AA93 /* FriendStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A8E8F02C6821D60058AA93 /* FriendStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,6 +63,9 @@
 		72A8E8E62C6773760058AA93 /* Shrikhand-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Shrikhand-Regular.otf"; sourceTree = "<group>"; };
 		72A8E8E82C6773840058AA93 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		72A8E8E92C6795630058AA93 /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
+		72A8E8EC2C68206A0058AA93 /* FriendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendView.swift; sourceTree = "<group>"; };
+		72A8E8EE2C6821C60058AA93 /* FriendProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendProtocol.swift; sourceTree = "<group>"; };
+		72A8E8F02C6821D60058AA93 /* FriendStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +134,7 @@
 			children = (
 				102B20602C6077E500DCE393 /* MessageProtocol.swift */,
 				102B20672C607B0600DCE393 /* AuthProtocol.swift */,
+				72A8E8EE2C6821C60058AA93 /* FriendProtocol.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -147,6 +154,7 @@
 			children = (
 				102B206A2C607C9F00DCE393 /* MessageStore.swift */,
 				102D67492C64BFDF006A90B5 /* AuthImpl.swift */,
+				72A8E8F02C6821D60058AA93 /* FriendStore.swift */,
 			);
 			path = Firebase;
 			sourceTree = "<group>";
@@ -162,6 +170,7 @@
 		1067507C2C609F1D0035537F /* View */ = {
 			isa = PBXGroup;
 			children = (
+				72A8E8EB2C6820500058AA93 /* FriendView */,
 				72A8E8E12C6767790058AA93 /* LoginView */,
 				102D674D2C666F83006A90B5 /* Component */,
 				72A8E8DA2C671A930058AA93 /* MessageListView */,
@@ -203,6 +212,14 @@
 				72A8E8E62C6773760058AA93 /* Shrikhand-Regular.otf */,
 			);
 			path = Font;
+			sourceTree = "<group>";
+		};
+		72A8E8EB2C6820500058AA93 /* FriendView */ = {
+			isa = PBXGroup;
+			children = (
+				72A8E8EC2C68206A0058AA93 /* FriendView.swift */,
+			);
+			path = FriendView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -297,12 +314,15 @@
 				1067507E2C609F2E0035537F /* DrawView.swift in Sources */,
 				72A8E8EA2C6795630058AA93 /* Chat.swift in Sources */,
 				102D674F2C666F91006A90B5 /* CardView.swift in Sources */,
+				72A8E8ED2C68206A0058AA93 /* FriendView.swift in Sources */,
 				102B20662C60786B00DCE393 /* AuthenticatedUser.swift in Sources */,
+				72A8E8EF2C6821C60058AA93 /* FriendProtocol.swift in Sources */,
 				72A8E8D92C6719990058AA93 /* ChatView.swift in Sources */,
 				102B206B2C607C9F00DCE393 /* MessageStore.swift in Sources */,
 				102B20642C60782100DCE393 /* Message.swift in Sources */,
 				102B20612C6077E500DCE393 /* MessageProtocol.swift in Sources */,
 				72A8E8DE2C671ACF0058AA93 /* MessageimageView.swift in Sources */,
+				72A8E8F12C6821D60058AA93 /* FriendStore.swift in Sources */,
 				72A8E8DC2C671AA90058AA93 /* MessageListView.swift in Sources */,
 				102B203F2C60722B00DCE393 /* BeChatApp.swift in Sources */,
 				102D674A2C64BFDF006A90B5 /* AuthImpl.swift in Sources */,
