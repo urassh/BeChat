@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CardView: View {
     @Binding var name: String
+    @Binding var imageURL: String
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
@@ -25,10 +26,14 @@ struct CardView: View {
             .padding(.top, 10)
 
             Spacer()
-            Image(systemName: "photo")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 200, height: 290)
+            AsyncImage(url: URL(string: imageURL)) { image in
+                image.resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(maxWidth: 300)
+            } placeholder: {
+                ProgressView()
+                    .frame(maxWidth: 300)
+            }
                 .background(Color.white)
                 .cornerRadius(10)
                 .padding(.horizontal)
@@ -46,12 +51,7 @@ struct CardView: View {
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
+#Preview {
+    CardView(name: .constant("saki"), imageURL: .constant(""))
 }
 
-#Preview {
-    CardView(name: .constant("saki"))
-}

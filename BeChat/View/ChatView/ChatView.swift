@@ -18,13 +18,10 @@ struct ChatView: View {
                     HStack {
                         if uid == message.to_id {
                             Spacer()
-                            TextView(
-                                text: message.contents,
-                                color: Color(red: 0.9, green: 0.9, blue: 0.97))
+                            MessageView(message: message,color: Color(red: 0.9, green: 0.9, blue: 0.97))
+                            
                         } else {
-                            TextView(
-                                text: message.contents,
-                                color: Color(red: 0.86, green: 0.86, blue: 0.86))
+                            MessageView(message: message,  color: Color(red: 0.86, green: 0.86, blue: 0.86))
                             Spacer()
                         }
                     }
@@ -53,7 +50,7 @@ struct ChatView: View {
                     Image(systemName: "paperplane.fill")
                 }
             }
-            .padding()
+      
         }
         .padding()
         .onAppear {
@@ -74,6 +71,32 @@ struct ChatView: View {
 #Preview {
     ChatView(partner: .constant(""))
 }
+struct MessageView: View {
+    let message: TextMessage
+    @State var color: Color
+    
+    var body: some View {
+        if message.message_type == "image"  {
+            if let imageURL = URL(string: message.contents) {
+                AsyncImage(url: imageURL) { image in
+                    image.resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(maxWidth: 300)
+                } placeholder: {
+                    ProgressView()
+                        .frame(maxWidth: 300)
+                }
+            }
+        } else {
+            // テキストメッセージを表示
+            TextView(
+                text: message.contents,
+                color:color
+            )
+        }
+    }
+}
+
 
 struct TextView: View {
     @State var text: String

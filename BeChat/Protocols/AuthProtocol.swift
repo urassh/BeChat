@@ -10,4 +10,5 @@ import Foundation
 protocol AuthProtocol {
     func login(user: UnAuthenticatedUser) async throws -> AuthenticatedUser
     func logout()
+    func getName(uid: String) async -> String
 }

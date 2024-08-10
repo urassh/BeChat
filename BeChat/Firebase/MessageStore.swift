@@ -69,7 +69,7 @@ class MessageStore: MessageProtocol {
             .document(userId)
             .collection("user_chats")
             .order(by: "timestamp", descending: true)
-            .getDocuments { querySnapshot, error in
+            .addSnapshotListener { querySnapshot, error in
                 if let error = error {
                     completion(.failure(error))
                     return
@@ -86,6 +86,7 @@ class MessageStore: MessageProtocol {
                 completion(.success(chats))
             }
     }
+
 
     func getTextMessage(id: String) async -> TextMessage? {
         let docRef = db.collection(COLLECTION).document(id)
@@ -131,11 +132,20 @@ class MessageStore: MessageProtocol {
     internal func sendText(with message: TextMessage) {
         do {
             try db.collection(COLLECTION).document(message.id.uuidString).setData(from: message)
-            let chatData =  Chat(id: UUID(), from_id: message.from_id, to_id: message.to_id, last_message: message.contents, timestamp: Timestamp())
-                        
-          try db.collection(CHATS_COLLECTION).document(message.from_id).collection("user_chats").document(message.to_id).setData(from: chatData)
-                    
-         try db.collection(CHATS_COLLECTION).document(message.to_id).collection("user_chats").document(message.from_id).setData(from: chatData)
+            let chatData =  Chat(id: UUID(), from_id: message.from_id, to_id: message.to_id, last_message: message.contents, timestamp: Timestamp(), last_image: "")
+            
+            
+            
+           db.collection(CHATS_COLLECTION)
+                .document(message.from_id)
+                .collection("user_chats")
+                .document(message.to_id)
+            
+            try db.collection(CHATS_COLLECTION)
+                .document(message.to_id)
+                .collection("user_chats")
+                .document(message.from_id)
+                .setData(from: chatData, merge: true)
         }
         catch {
             print("Error Writing Document: \(error)")
@@ -145,33 +155,68 @@ class MessageStore: MessageProtocol {
     private func sendImage(with message: ImageMessage) {
         guard let image = message.image else { return }
 
-        let textMessage: TextMessage = message.toText()
-
-        do {
-            try db.collection(COLLECTION).document(message.id.uuidString).setData(from: textMessage)
-            
-            let chatData =  Chat(id: UUID(), from_id: textMessage.from_id, to_id: textMessage.to_id, last_message: "", timestamp: Timestamp())
-                        
-          try db.collection(CHATS_COLLECTION).document(message.from_id).collection("user_chats").document(message.to_id).setData(from: chatData)
+        uploadImage(image: image, messageId: UUID()) { result in
+            switch result {
+            case .success(let imageURL):
+                let message = TextMessage(
+                    id: UUID(),
+                    from_id: message.from_id,
+                    to_id: message.to_id,
+                    contents: imageURL.absoluteString,
+                    message_type: "image", 
+                    timestamp: Timestamp()
+                )
+                
+              
+                do {
+                    try self.db.collection(self.COLLECTION).document(message.id.uuidString).setData(from: message)
                     
-         try db.collection(CHATS_COLLECTION).document(message.to_id).collection("user_chats").document(message.from_id).setData(from: chatData)
-            let ref = storage.reference(forURL: STORAGE_URL).child(message.id.uuidString)
-            guard let jpegData = convertToJpegData(uiImage: image) else {
-                print("画像の変換に失敗しました")
+                
+                    let chatData = Chat(id: UUID(), from_id: message.from_id, to_id: message.to_id, last_message: "", timestamp: Timestamp(), last_image: imageURL.absoluteString)
+                    
+                 
+            
+                    try self.db.collection(self.CHATS_COLLECTION).document(message.from_id).collection("user_chats").document(message.to_id).setData(from: chatData)
+                    try self.db.collection(self.CHATS_COLLECTION).document(message.to_id).collection("user_chats").document(message.from_id).setData(from: chatData)
+                } catch {
+                    print("Error Writing Document: \(error)")
+                }
+                
+            case .failure(let error):
+                print("Error uploading image: \(error.localizedDescription)")
+            }
+        }
+    }
+
+    func uploadImage(image: UIImage, messageId: UUID, completion: @escaping (Result<URL, Error>) -> Void) {
+        let storage = Storage.storage()
+        let storageRef = storage.reference().child("images/\(messageId.uuidString).jpg")
+
+        guard let imageData = image.jpegData(compressionQuality: 0.75) else {
+            completion(.failure(NSError(domain: "ImageError", code: 400, userInfo: [NSLocalizedDescriptionKey: "Image data conversion failed"])))
+            return
+        }
+
+        storageRef.putData(imageData, metadata: nil) { metadata, error in
+            if let error = error {
+                completion(.failure(error))
                 return
             }
-            ref.putData(jpegData as Data)
-        }
-        catch {
-            print("Error Writing Document: \(error)")
+
+            storageRef.downloadURL { url, error in
+                if let error = error {
+                    completion(.failure(error))
+                    return
+                }
+
+                guard let downloadURL = url else {
+                    completion(.failure(NSError(domain: "URLRetrievalError", code: 500, userInfo: [NSLocalizedDescriptionKey: "Failed to retrieve download URL"])))
+                    return
+                }
+
+                completion(.success(downloadURL))
+            }
         }
     }
 
-    private func convertToJpegData(uiImage: UIImage) -> NSData? {
-        return uiImage.jpegData(compressionQuality: 0.1) as? NSData
-    }
-
-    deinit {
-        listener?.remove()
-    }
 }

@@ -17,7 +17,7 @@ struct TextMessage: Message, Codable {
     let id: UUID
     let from_id: String
     let to_id: String
-    let contents: String
+   var contents: String
     var message_type: String = "message"
     let timestamp: Timestamp
 

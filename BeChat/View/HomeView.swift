@@ -11,10 +11,12 @@ import FirebaseAuth
 struct HomeView: View {
     @State var isTapped = false
     @State var partner = ""
+    @State var partnerName = ""
     @State private var repository: AuthProtocol = AuthImpl()
     @State private var messageRepository: MessageProtocol = MessageStore()
     @State var uid = Auth.auth().currentUser?.uid ?? ""
     @State private var chats = [Chat]()
+    @State var names = [String: String]()
     var body: some View {
         NavigationView {
             VStack {
@@ -35,7 +37,11 @@ struct HomeView: View {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 20) {
                         ForEach(chats) {chat in
-                            CardView(name: .constant(chat.to_id))
+                            let partnerId = chat.from_id == uid ? chat.to_id : chat.from_id
+                            let partnerName = names[partnerId] ?? "Loading...！"
+                            let imageUrl = chat.last_image
+                            
+                            CardView(name: .constant(partnerName), imageURL: .constant(imageUrl))
                                 .onTapGesture {
                                     if chat.from_id != uid {
                                         partner = chat.from_id
@@ -70,12 +76,18 @@ struct HomeView: View {
                         })
                 
                     .onAppear {
+                        
+                        
+                    
+                      
                         messageRepository.fetchChatAll(for: uid) { result in
                             switch result {
                             case .success(let messages):
                                 DispatchQueue.main.async {
                                     self.chats = messages
-                                    print(chats)
+                                getNames()
+                             
+                
                                 }
                             case .failure(let error):
                                 print("Error fetching messages: \(error)")
@@ -86,6 +98,30 @@ struct HomeView: View {
             }
         }
     }
+    private func getNames() {
+        Task {
+            do {
+                var nameDict = [String: String]()
+                for chat in chats {
+                    let partnerId = chat.from_id == uid ? chat.to_id : chat.from_id
+                    if nameDict[partnerId] == nil {
+                        let name = await repository.getName(uid: partnerId)
+                        nameDict[partnerId] = name
+                        print("Fetched name: \(name) for partnerId: \(partnerId)")
+                    }
+                }
+                
+                // names への代入前にデバッグ情報を追加
+                DispatchQueue.main.async {
+                    print("Assigning names: \(nameDict)")
+                    names = nameDict
+                }
+            } catch {
+                print("Error fetching names: \(error)")
+            }
+        }
+    }
+
 }
 
 #Preview {
