@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct HomeView: View {
+    @State var isTapped = false
     var body: some View {
         VStack {
             Divider()
@@ -28,6 +29,9 @@ struct HomeView: View {
                 HStack(spacing: 20) {
                     ForEach(0..<5) { _ in
                         CardView()
+                            .onTapGesture {
+                                isTapped = true
+                            }
                     }
                 }
                 .padding()
@@ -43,9 +47,13 @@ struct HomeView: View {
                     .background(Color.cyan)
                     .clipShape(Circle())
                     .shadow(radius: 10)
+                    .padding(.top, 80)
             }
 
             Spacer()
+                .sheet(isPresented: $isTapped, content: {
+                    ChatView()
+                })
 
         }
     }

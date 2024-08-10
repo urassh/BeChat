@@ -13,7 +13,7 @@ struct DrawView: View {
     @State private var image: UIImage = UIImage(named: "sample")!
 
     var body: some View {
-        NavigationView {
+
             penViewInstance
                 .toolbar {
 
@@ -36,7 +36,7 @@ struct DrawView: View {
                     }
                 }
         }
-    }
+    
 }
 
 struct PenView: UIViewRepresentable {
