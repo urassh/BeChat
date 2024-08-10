@@ -32,6 +32,8 @@
 		72A8E8D92C6719990058AA93 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A8E8D82C6719980058AA93 /* ChatView.swift */; };
 		72A8E8DC2C671AA90058AA93 /* MessageListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A8E8DB2C671AA90058AA93 /* MessageListView.swift */; };
 		72A8E8DE2C671ACF0058AA93 /* MessageimageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A8E8DD2C671ACF0058AA93 /* MessageimageView.swift */; };
+		72A8E8E32C6767860058AA93 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A8E8E22C6767860058AA93 /* LoginView.swift */; };
+		72A8E8E72C6773760058AA93 /* Shrikhand-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 72A8E8E62C6773760058AA93 /* Shrikhand-Regular.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +55,9 @@
 		72A8E8D82C6719980058AA93 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		72A8E8DB2C671AA90058AA93 /* MessageListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageListView.swift; sourceTree = "<group>"; };
 		72A8E8DD2C671ACF0058AA93 /* MessageimageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageimageView.swift; sourceTree = "<group>"; };
+		72A8E8E22C6767860058AA93 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		72A8E8E62C6773760058AA93 /* Shrikhand-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Shrikhand-Regular.otf"; sourceTree = "<group>"; };
+		72A8E8E82C6773840058AA93 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,8 +98,9 @@
 		102B203D2C60722B00DCE393 /* BeChat */ = {
 			isa = PBXGroup;
 			children = (
+				72A8E8E82C6773840058AA93 /* Info.plist */,
+				72A8E8E52C6773410058AA93 /* Font */,
 				1067507C2C609F1D0035537F /* View */,
-				102B203E2C60722B00DCE393 /* BeChatApp.swift */,
 				102B20402C60722B00DCE393 /* ContentView.swift */,
 				102B20422C60722C00DCE393 /* Assets.xcassets */,
 				102B20692C607C3D00DCE393 /* Firebase */,
@@ -102,6 +108,7 @@
 				102B205F2C6077C000DCE393 /* Protocols */,
 				102B20442C60722C00DCE393 /* Preview Content */,
 				102B204C2C60730300DCE393 /* GoogleService-Info.plist */,
+				102B203E2C60722B00DCE393 /* BeChatApp.swift */,
 			);
 			path = BeChat;
 			sourceTree = "<group>";
@@ -152,6 +159,7 @@
 		1067507C2C609F1D0035537F /* View */ = {
 			isa = PBXGroup;
 			children = (
+				72A8E8E12C6767790058AA93 /* LoginView */,
 				102D674D2C666F83006A90B5 /* Component */,
 				72A8E8DA2C671A930058AA93 /* MessageListView */,
 				72A8E8D72C67197B0058AA93 /* ChatView */,
@@ -176,6 +184,22 @@
 				72A8E8DD2C671ACF0058AA93 /* MessageimageView.swift */,
 			);
 			path = MessageListView;
+			sourceTree = "<group>";
+		};
+		72A8E8E12C6767790058AA93 /* LoginView */ = {
+			isa = PBXGroup;
+			children = (
+				72A8E8E22C6767860058AA93 /* LoginView.swift */,
+			);
+			path = LoginView;
+			sourceTree = "<group>";
+		};
+		72A8E8E52C6773410058AA93 /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				72A8E8E62C6773760058AA93 /* Shrikhand-Regular.otf */,
+			);
+			path = Font;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -252,6 +276,7 @@
 				102B20462C60722C00DCE393 /* Preview Assets.xcassets in Resources */,
 				102B20432C60722C00DCE393 /* Assets.xcassets in Resources */,
 				102B204D2C60730300DCE393 /* GoogleService-Info.plist in Resources */,
+				72A8E8E72C6773760058AA93 /* Shrikhand-Regular.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -265,6 +290,7 @@
 				102D674C2C666E12006A90B5 /* HomeView.swift in Sources */,
 				102B20412C60722B00DCE393 /* ContentView.swift in Sources */,
 				102B20682C607B0600DCE393 /* AuthProtocol.swift in Sources */,
+				72A8E8E32C6767860058AA93 /* LoginView.swift in Sources */,
 				1067507E2C609F2E0035537F /* DrawView.swift in Sources */,
 				102D674F2C666F91006A90B5 /* CardView.swift in Sources */,
 				102B20662C60786B00DCE393 /* AuthenticatedUser.swift in Sources */,
@@ -412,6 +438,7 @@
 				DEVELOPMENT_TEAM = NJ55RU4U3A;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BeChat/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -442,6 +469,7 @@
 				DEVELOPMENT_TEAM = NJ55RU4U3A;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BeChat/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
