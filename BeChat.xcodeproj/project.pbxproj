@@ -34,6 +34,7 @@
 		72A8E8DE2C671ACF0058AA93 /* MessageimageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A8E8DD2C671ACF0058AA93 /* MessageimageView.swift */; };
 		72A8E8E32C6767860058AA93 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A8E8E22C6767860058AA93 /* LoginView.swift */; };
 		72A8E8E72C6773760058AA93 /* Shrikhand-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 72A8E8E62C6773760058AA93 /* Shrikhand-Regular.otf */; };
+		72A8E8EA2C6795630058AA93 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A8E8E92C6795630058AA93 /* Chat.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +59,7 @@
 		72A8E8E22C6767860058AA93 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		72A8E8E62C6773760058AA93 /* Shrikhand-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Shrikhand-Regular.otf"; sourceTree = "<group>"; };
 		72A8E8E82C6773840058AA93 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		72A8E8E92C6795630058AA93 /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,6 +137,7 @@
 			children = (
 				102B20632C60782100DCE393 /* Message.swift */,
 				102B20652C60786B00DCE393 /* AuthenticatedUser.swift */,
+				72A8E8E92C6795630058AA93 /* Chat.swift */,
 			);
 			path = DataModel;
 			sourceTree = "<group>";
@@ -292,6 +295,7 @@
 				102B20682C607B0600DCE393 /* AuthProtocol.swift in Sources */,
 				72A8E8E32C6767860058AA93 /* LoginView.swift in Sources */,
 				1067507E2C609F2E0035537F /* DrawView.swift in Sources */,
+				72A8E8EA2C6795630058AA93 /* Chat.swift in Sources */,
 				102D674F2C666F91006A90B5 /* CardView.swift in Sources */,
 				102B20662C60786B00DCE393 /* AuthenticatedUser.swift in Sources */,
 				72A8E8D92C6719990058AA93 /* ChatView.swift in Sources */,

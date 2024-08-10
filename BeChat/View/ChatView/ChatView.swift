@@ -1,46 +1,35 @@
-//
-//  ChatView.swift
-//  BeChat
-//
-//  Created by saki on 2024/08/09.
-//
-
 import FirebaseAuth
+import FirebaseCore
 import SwiftUI
 
 struct ChatView: View {
     @State var chat = ""
     @State var messages = [TextMessage]()
-    @State var uid = Auth.auth().currentUser?.uid
+    @State private var uid = Auth.auth().currentUser?.uid ?? ""
+    @Binding var partner: String
+    @State private var repository: MessageProtocol = MessageStore()
 
     var body: some View {
         VStack {
             Spacer(minLength: 30)
 
             ScrollView(.vertical) {
-                ForEach(messages) { message in
+                ForEach(messages, id: \.id) { message in
                     HStack {
                         if uid == message.to_id {
                             Spacer()
-                            TextView(
-                                text: message.contents,
-                                color: Color(red: 0.9, green: 0.9, blue: 0.97))
+                            MessageView(
+                                message: message, color: Color(red: 0.9, green: 0.9, blue: 0.97))
 
                         }
-
-                        if uid != message.to_id {
-                            TextView(
-                                text: message.contents,
-                                color: Color(red: 0.86, green: 0.86, blue: 0.86))
+                        else {
+                            MessageView(
+                                message: message, color: Color(red: 0.86, green: 0.86, blue: 0.86))
                             Spacer()
                         }
-
                     }
-
                 }
-
             }
-
             .padding(.leading, 30)
 
             HStack {
@@ -48,25 +37,68 @@ struct ChatView: View {
                     .textFieldStyle(.roundedBorder)
                     .padding()
                 Button(action: {
-                    //送信の処理を書く
+                    guard !chat.isEmpty else { return }
 
+                    let message = TextMessage(
+                        id: UUID(),
+                        from_id: uid,
+                        to_id: partner,
+                        contents: chat,
+                        timestamp: Timestamp()
+                    )
+
+                    repository.send(with: message)
+                    chat = ""
                 }) {
                     Image(systemName: "paperplane.fill")
                 }
             }
-            .padding()
 
-            .onAppear {
-
+        }
+        .padding()
+        .onAppear {
+            repository.fetchAll(for: partner) { result in
+                switch result {
+                case .success(let messages):
+                    DispatchQueue.main.async {
+                        self.messages = messages
+                    }
+                case .failure(let error):
+                    print("Error fetching messages: \(error)")
+                }
             }
         }
-
     }
-
 }
 
 #Preview {
-    ChatView()
+    ChatView(partner: .constant(""))
+}
+struct MessageView: View {
+    let message: TextMessage
+    @State var color: Color
+
+    var body: some View {
+        if message.message_type == "image" {
+            if let imageURL = URL(string: message.contents) {
+                AsyncImage(url: imageURL) { image in
+                    image.resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(maxWidth: 300)
+                } placeholder: {
+                    ProgressView()
+                        .frame(maxWidth: 300)
+                }
+            }
+        }
+        else {
+            // テキストメッセージを表示
+            TextView(
+                text: message.contents,
+                color: color
+            )
+        }
+    }
 }
 
 struct TextView: View {

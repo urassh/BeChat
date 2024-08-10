@@ -8,21 +8,17 @@
 import SwiftUI
 
 struct CardView: View {
+    @Binding var name: String
+    @Binding var imageURL: String
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                Circle()
-                    .fill(Color.white)
-                    .frame(width: 40, height: 40)
 
                 VStack(alignment: .leading) {
-                    Text("urassh")
+                    Text(name)
                         .font(.headline)
                         .foregroundColor(.white)
 
-                    Text("2024.10.11")
-                        .font(.subheadline)
-                        .foregroundColor(.white)
                 }
                 Spacer()
             }
@@ -30,14 +26,18 @@ struct CardView: View {
             .padding(.top, 10)
 
             Spacer()
-            Image(systemName: "photo")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 200, height: 290)
-                .background(Color.white)
-                .cornerRadius(10)
-                .padding(.horizontal)
-                .padding(.bottom, 10)
+            AsyncImage(url: URL(string: imageURL)) { image in
+                image.resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(maxWidth: 300)
+            } placeholder: {
+                ProgressView()
+                    .frame(maxWidth: 300)
+            }
+            .background(Color.white)
+            .cornerRadius(10)
+            .padding(.horizontal)
+            .padding(.bottom, 10)
             Spacer()
         }
         .frame(width: 230, height: 370)
@@ -51,12 +51,6 @@ struct CardView: View {
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
-}
-
 #Preview {
-    CardView()
+    CardView(name: .constant("saki"), imageURL: .constant(""))
 }

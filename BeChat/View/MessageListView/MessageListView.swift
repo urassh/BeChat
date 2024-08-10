@@ -33,7 +33,7 @@ struct MessageListView: View {
                 .sheet(
                     isPresented: $isTapMessage,
                     content: {
-                        ChatView()
+                        //     ChatView()
                     }
                 )
                 .padding(.horizontal, 30)

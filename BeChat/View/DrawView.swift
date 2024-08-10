@@ -6,6 +6,7 @@
 //
 
 import FirebaseAuth
+import FirebaseCore
 import PencilKit
 import SwiftUI
 
@@ -14,7 +15,7 @@ struct DrawView: View {
     @State private var image: UIImage = UIImage(named: "sample")!
 
     @State private var repository: MessageProtocol = MessageStore()
-    @State var uid = (Auth.auth().currentUser?.uid ?? "")
+    @State var uid = (Auth.auth().currentUser?.uid ?? "12345")
     @Environment(\.presentationMode) var presentation
 
     var body: some View {
@@ -35,7 +36,8 @@ struct DrawView: View {
                     Button(action: {
                         image = penViewInstance.saveImage()
                         let imageMessage = ImageMessage(
-                            id: UUID(), from_id: "", to_id: uid, image: image)
+                            id: UUID(), from_id: "Jc92RwR8XLVPxU1N2GVtEPci2tu1", to_id: uid,
+                            image: image, timestamp: Timestamp())
 
                         repository.send(with: imageMessage)
                         self.presentation.wrappedValue.dismiss()

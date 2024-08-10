@@ -22,8 +22,9 @@ class AuthImpl: AuthProtocol {
                     let authenticatedUser = AuthenticatedUser(
                         uid: authResult.user.uid, name: user.name)
                     do {
-                        try self.db.collection(self.COLLECTION).document(user.name).setData(
-                            from: authenticatedUser)
+                        try self.db.collection(self.COLLECTION).document(authResult.user.uid)
+                            .setData(
+                                from: authenticatedUser)
                     }
                     catch {
                         print("Error Writing Document: \(error)")
@@ -42,6 +43,19 @@ class AuthImpl: AuthProtocol {
         }
         catch let signOutError as NSError {
             print("Error signing out: %@", signOutError)
+        }
+    }
+    func getName(uid: String) async -> String {
+        do {
+            let documentReference = db.collection(COLLECTION).document(uid)
+            let documentSnapshot = try await documentReference.getDocument()
+            let data = documentSnapshot.data()
+
+            return data?["name"] as! String
+        }
+        catch {
+            print(error)
+            return ""
         }
     }
 }
