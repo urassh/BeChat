@@ -11,12 +11,14 @@ import SwiftUI
 struct ChatView: View {
     @State var chat = ""
     @State var messages = [TextMessage]()
-    @State var uid = Auth.auth().currentUser?.uid
-
+    @State private var uid = Auth.auth().currentUser?.uid ?? ""
+    @Binding var partner : String
+    @State private var repository: MessageProtocol = MessageStore()
+    
     var body: some View {
         VStack {
             Spacer(minLength: 30)
-
+            
             ScrollView(.vertical) {
                 ForEach(messages) { message in
                     HStack {
@@ -25,48 +27,67 @@ struct ChatView: View {
                             TextView(
                                 text: message.contents,
                                 color: Color(red: 0.9, green: 0.9, blue: 0.97))
-
+                            
                         }
-
+                        
                         if uid != message.to_id {
                             TextView(
                                 text: message.contents,
                                 color: Color(red: 0.86, green: 0.86, blue: 0.86))
                             Spacer()
                         }
-
+                        
                     }
-
+                    
                 }
-
+                
             }
-
+            
             .padding(.leading, 30)
-
+            
             HStack {
                 TextField("メッセージを送信", text: $chat)
                     .textFieldStyle(.roundedBorder)
                     .padding()
                 Button(action: {
-                    //送信の処理を書く
-
-                }) {
-                    Image(systemName: "paperplane.fill")
-                }
+                                 guard !chat.isEmpty else { return }
+                                 
+                                 let message = TextMessage(
+                                     id: UUID(),
+                                     from_id: uid,
+                                     to_id: partner,
+                                     contents: chat
+                                 )
+                                 
+                                 repository.send(with: message)
+                                 chat = ""
+                             }) {
+                                 Image(systemName: "paperplane.fill")
+                             }
+                         }
             }
             .padding()
-
+            
             .onAppear {
-
+                repository.fetchAll { result in
+                    switch result {
+                    case .success(let messages):
+                        DispatchQueue.main.async {
+                            self.messages = messages
+                        }
+                    case .failure(let error):
+                        print("Error fetching messages: \(error)")
+                    }
+                }
             }
         }
-
-    }
-
+        
+    
+    
 }
 
 #Preview {
-    ChatView()
+    ChatView( partner: .constant(""))
 }
 
 struct TextView: View {

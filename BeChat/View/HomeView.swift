@@ -9,6 +9,7 @@ import SwiftUI
 
 struct HomeView: View {
     @State var isTapped = false
+    @State var partner = ""
     var body: some View {
         VStack {
             Divider()
@@ -54,7 +55,7 @@ struct HomeView: View {
                 .sheet(
                     isPresented: $isTapped,
                     content: {
-                        ChatView()
+                        ChatView( partner: $partner)
                     })
 
         }
