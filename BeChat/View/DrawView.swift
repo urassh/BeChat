@@ -5,12 +5,16 @@
 //  Created by 浦山秀斗 on 2024/08/05.
 //
 
+import FirebaseAuth
 import PencilKit
 import SwiftUI
 
 struct DrawView: View {
     @State private var penViewInstance = PenView()
     @State private var image: UIImage = UIImage(named: "sample")!
+    @State private var repository: MessageProtocol = MessageStore()
+    @State var uid = (Auth.auth().currentUser?.uid ?? "")
+    @Environment(\.presentationMode) var presentation
 
     var body: some View {
 
@@ -29,6 +33,11 @@ struct DrawView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
                         image = penViewInstance.saveImage()
+                        let imageMessage = ImageMessage(
+                            id: UUID(), from_id: "", to_id: uid, image: image)
+
+                        repository.send(with: imageMessage)
+                        self.presentation.wrappedValue.dismiss()
 
                     }) {
                         Image(systemName: "paperplane.fill")
@@ -77,8 +86,13 @@ struct PenView: UIViewRepresentable {
     }
 
     func saveImage() -> UIImage {
-        let data = pkcView.drawing.dataRepresentation()
-        return UIImage(data: data)!
+        let bounds = self.pkcView.bounds
+        let scale = UIScreen.main.scale
+        UIGraphicsBeginImageContextWithOptions(bounds.size, false, scale)
+        self.pkcView.drawing.image(from: bounds, scale: scale).draw(in: bounds)
+         let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image!
     }
 
     func updateUIView(_ uiView: PKCanvasView, context: Context) {
