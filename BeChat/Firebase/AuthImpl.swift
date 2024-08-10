@@ -6,8 +6,11 @@
 //
 
 import FirebaseAuth
+import FirebaseFirestore
 
 class AuthImpl: AuthProtocol {
+    private let db = Firestore.firestore()
+    private let COLLECTION = "users"
     func login(user: UnAuthenticatedUser) async throws -> AuthenticatedUser {
         return try await withCheckedThrowingContinuation { continuation in
             Auth.auth().signInAnonymously { authResult, error in
@@ -18,12 +21,19 @@ class AuthImpl: AuthProtocol {
                 else if let authResult = authResult {
                     let authenticatedUser = AuthenticatedUser(
                         uid: authResult.user.uid, name: user.name)
+                    do {
+                        try self.db.collection(self.COLLECTION).document(user.name).setData(from: authenticatedUser)
+                    }
+                    catch {
+                        print("Error Writing Document: \(error)")
+                    }
+                    
                     continuation.resume(returning: authenticatedUser)
                 }
             }
         }
     }
-
+    
     func logout() {
         do {
             try Auth.auth().signOut()
