@@ -74,7 +74,6 @@ struct TextView: View {
     @State var color: Color
     var body: some View {
         Text(text)
-
             .padding(.horizontal, 20)
             .padding(.vertical, 7)
 
