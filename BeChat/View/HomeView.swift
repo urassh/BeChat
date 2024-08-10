@@ -10,6 +10,7 @@ import SwiftUI
 struct HomeView: View {
     @State var isTapped = false
     @State var partner = ""
+    @State private var repository: AuthProtocol = AuthImpl()
     var body: some View {
         VStack {
             Divider()
@@ -57,6 +58,9 @@ struct HomeView: View {
                     content: {
                         ChatView( partner: $partner)
                     })
+                .onAppear(){
+                    
+                }
 
         }
     }

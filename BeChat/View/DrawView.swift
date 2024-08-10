@@ -14,7 +14,7 @@ struct DrawView: View {
     @State private var image: UIImage = UIImage(named: "sample")!
 
     @State private var repository: MessageProtocol = MessageStore()
-    @State var uid = (Auth.auth().currentUser?.uid ?? "")
+    @State var uid = (Auth.auth().currentUser?.uid ?? "12345")
     @Environment(\.presentationMode) var presentation
 
     var body: some View {
