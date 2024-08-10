@@ -19,7 +19,6 @@ struct DrawView: View {
 
     var body: some View {
 
-
         penViewInstance
             .toolbar {
 
@@ -30,7 +29,6 @@ struct DrawView: View {
                         Image(systemName: "arrowshape.turn.up.backward.circle")
                     }
                 }
-
 
                 //送信
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -50,7 +48,6 @@ struct DrawView: View {
     }
 
 }
-
 
 struct PenView: UIViewRepresentable {
     func makeCoordinator() -> Coordinator {
@@ -95,7 +92,7 @@ struct PenView: UIViewRepresentable {
         let scale = UIScreen.main.scale
         UIGraphicsBeginImageContextWithOptions(bounds.size, false, scale)
         self.pkcView.drawing.image(from: bounds, scale: scale).draw(in: bounds)
-         let image = UIGraphicsGetImageFromCurrentImageContext()
+        let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return image!
     }
