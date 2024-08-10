@@ -12,6 +12,7 @@ import SwiftUI
 struct DrawView: View {
     @State private var penViewInstance = PenView()
     @State private var image: UIImage = UIImage(named: "sample")!
+
     @State private var repository: MessageProtocol = MessageStore()
     @State var uid = (Auth.auth().currentUser?.uid ?? "")
     @Environment(\.presentationMode) var presentation
@@ -86,11 +87,12 @@ struct PenView: UIViewRepresentable {
     }
 
     func saveImage() -> UIImage {
+
         let bounds = self.pkcView.bounds
         let scale = UIScreen.main.scale
         UIGraphicsBeginImageContextWithOptions(bounds.size, false, scale)
         self.pkcView.drawing.image(from: bounds, scale: scale).draw(in: bounds)
-         let image = UIGraphicsGetImageFromCurrentImageContext()
+        let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return image!
     }

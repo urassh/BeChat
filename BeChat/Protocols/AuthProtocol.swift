@@ -8,7 +8,6 @@
 import Foundation
 
 protocol AuthProtocol {
-    func login(user: UnAuthenticatedUser) -> AuthenticatedUser
-    func signup(user: UnAuthenticatedUser) -> AuthenticatedUser
+    func login(user: UnAuthenticatedUser) async throws -> AuthenticatedUser
     func logout()
 }
