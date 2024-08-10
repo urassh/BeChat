@@ -5,26 +5,29 @@
 //  Created by saki on 2024/08/10.
 //
 
-import SwiftUI
 import FirebaseAuth
+import SwiftUI
 
 struct LoginView: View {
-    @State var repository : AuthProtocol = AuthImpl()
+    @State var repository: AuthProtocol = AuthImpl()
     @State var name = ""
     var body: some View {
-        if Auth.auth().currentUser?.uid != nil{
+        if Auth.auth().currentUser?.uid != nil {
             HomeView()
-        }else{
-            VStack{
+        }
+        else {
+            VStack {
                 TextField("名前を入力", text: $name)
-                
-                Button(action: {
-                    Task{
-                        try await  repository.login(user: UnAuthenticatedUser(name: name))
-                    }
-                }, label: {
-                    Text("Login")
-                })
+
+                Button(
+                    action: {
+                        Task {
+                            try await repository.login(user: UnAuthenticatedUser(name: name))
+                        }
+                    },
+                    label: {
+                        Text("Login")
+                    })
             }
         }
     }

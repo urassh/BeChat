@@ -22,18 +22,19 @@ class AuthImpl: AuthProtocol {
                     let authenticatedUser = AuthenticatedUser(
                         uid: authResult.user.uid, name: user.name)
                     do {
-                        try self.db.collection(self.COLLECTION).document(user.name).setData(from: authenticatedUser)
+                        try self.db.collection(self.COLLECTION).document(user.name).setData(
+                            from: authenticatedUser)
                     }
                     catch {
                         print("Error Writing Document: \(error)")
                     }
-                    
+
                     continuation.resume(returning: authenticatedUser)
                 }
             }
         }
     }
-    
+
     func logout() {
         do {
             try Auth.auth().signOut()
