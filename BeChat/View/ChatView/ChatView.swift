@@ -76,7 +76,6 @@ struct TextView: View {
         Text(text)
             .padding(.horizontal, 20)
             .padding(.vertical, 7)
-
             .background(Color(color), in: RoundedRectangle(cornerRadius: 10))
             .padding(.vertical, 5)
             .padding(.trailing, 20)
