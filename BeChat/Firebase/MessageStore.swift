@@ -5,16 +5,15 @@
 //  Created by 浦山秀斗 on 2024/08/05.
 //
 
+import FirebaseAuth
 import FirebaseFirestore
 import FirebaseStorage
-import FirebaseAuth
 
 class MessageStore: MessageProtocol {
-   
-    
+
     private let db = Firestore.firestore()
     private let storage = Storage.storage()
-    private let COLLECTION = "messages"    
+    private let COLLECTION = "messages"
     private let CHATS_COLLECTION = "chats"
     private let STORAGE_URL = "gs://bechat-0811.appspot.com/image_message"
     private var listener: ListenerRegistration?
@@ -29,9 +28,9 @@ class MessageStore: MessageProtocol {
         }
     }
 
-   
-
-    func fetchAll(for partnerId: String, completion: @escaping (Result<[TextMessage], Error>) -> Void) {
+    func fetchAll(
+        for partnerId: String, completion: @escaping (Result<[TextMessage], Error>) -> Void
+    ) {
         guard let currentUserId = Auth.auth().currentUser?.uid else {
             completion(.failure(NSError(domain: "NoUser", code: 401, userInfo: nil)))
             return
@@ -40,7 +39,7 @@ class MessageStore: MessageProtocol {
         let query = db.collection(COLLECTION)
             .whereField("from_id", in: [currentUserId, partnerId])
             .whereField("to_id", in: [currentUserId, partnerId])
-            .order(by: "timestamp", descending: true) // タイムスタンプでソート
+            .order(by: "timestamp", descending: true)  // タイムスタンプでソート
 
         query.addSnapshotListener { (querySnapshot, error) in
             if let error = error {
@@ -61,9 +60,6 @@ class MessageStore: MessageProtocol {
         }
     }
 
- 
-  
-
     func fetchChatAll(for userId: String, completion: @escaping (Result<[Chat], Error>) -> Void) {
         db.collection(CHATS_COLLECTION)
             .document(userId)
@@ -74,19 +70,18 @@ class MessageStore: MessageProtocol {
                     completion(.failure(error))
                     return
                 }
-                
+
                 guard let documents = querySnapshot?.documents else {
                     completion(.success([]))
                     return
                 }
-                
+
                 let chats = documents.compactMap { document in
                     return try? document.data(as: Chat.self)
                 }
                 completion(.success(chats))
             }
     }
-
 
     func getTextMessage(id: String) async -> TextMessage? {
         let docRef = db.collection(COLLECTION).document(id)
@@ -121,7 +116,8 @@ class MessageStore: MessageProtocol {
             let image = UIImage(data: data)
 
             return ImageMessage(
-                id: message.id, from_id: message.from_id, to_id: message.to_id, image: image, timestamp: Timestamp())
+                id: message.id, from_id: message.from_id, to_id: message.to_id, image: image,
+                timestamp: Timestamp())
         }
         catch {
             print("Error occurred! : \(error)")
@@ -132,15 +128,15 @@ class MessageStore: MessageProtocol {
     internal func sendText(with message: TextMessage) {
         do {
             try db.collection(COLLECTION).document(message.id.uuidString).setData(from: message)
-            let chatData =  Chat(id: UUID(), from_id: message.from_id, to_id: message.to_id, last_message: message.contents, timestamp: Timestamp(), last_image: "")
-            
-            
-            
-           db.collection(CHATS_COLLECTION)
+            let chatData = Chat(
+                id: UUID(), from_id: message.from_id, to_id: message.to_id,
+                last_message: message.contents, timestamp: Timestamp(), last_image: "")
+
+            db.collection(CHATS_COLLECTION)
                 .document(message.from_id)
                 .collection("user_chats")
                 .document(message.to_id)
-            
+
             try db.collection(CHATS_COLLECTION)
                 .document(message.to_id)
                 .collection("user_chats")
@@ -163,37 +159,46 @@ class MessageStore: MessageProtocol {
                     from_id: message.from_id,
                     to_id: message.to_id,
                     contents: imageURL.absoluteString,
-                    message_type: "image", 
+                    message_type: "image",
                     timestamp: Timestamp()
                 )
-                
-              
+
                 do {
-                    try self.db.collection(self.COLLECTION).document(message.id.uuidString).setData(from: message)
-                    
-                
-                    let chatData = Chat(id: UUID(), from_id: message.from_id, to_id: message.to_id, last_message: "", timestamp: Timestamp(), last_image: imageURL.absoluteString)
-                    
-                 
-            
-                    try self.db.collection(self.CHATS_COLLECTION).document(message.from_id).collection("user_chats").document(message.to_id).setData(from: chatData)
-                    try self.db.collection(self.CHATS_COLLECTION).document(message.to_id).collection("user_chats").document(message.from_id).setData(from: chatData)
-                } catch {
+                    try self.db.collection(self.COLLECTION).document(message.id.uuidString).setData(
+                        from: message)
+
+                    let chatData = Chat(
+                        id: UUID(), from_id: message.from_id, to_id: message.to_id,
+                        last_message: "", timestamp: Timestamp(),
+                        last_image: imageURL.absoluteString)
+
+                    try self.db.collection(self.CHATS_COLLECTION).document(message.from_id)
+                        .collection("user_chats").document(message.to_id).setData(from: chatData)
+                    try self.db.collection(self.CHATS_COLLECTION).document(message.to_id)
+                        .collection("user_chats").document(message.from_id).setData(from: chatData)
+                }
+                catch {
                     print("Error Writing Document: \(error)")
                 }
-                
+
             case .failure(let error):
                 print("Error uploading image: \(error.localizedDescription)")
             }
         }
     }
 
-    func uploadImage(image: UIImage, messageId: UUID, completion: @escaping (Result<URL, Error>) -> Void) {
+    func uploadImage(
+        image: UIImage, messageId: UUID, completion: @escaping (Result<URL, Error>) -> Void
+    ) {
         let storage = Storage.storage()
         let storageRef = storage.reference().child("images/\(messageId.uuidString).jpg")
 
         guard let imageData = image.jpegData(compressionQuality: 0.75) else {
-            completion(.failure(NSError(domain: "ImageError", code: 400, userInfo: [NSLocalizedDescriptionKey: "Image data conversion failed"])))
+            completion(
+                .failure(
+                    NSError(
+                        domain: "ImageError", code: 400,
+                        userInfo: [NSLocalizedDescriptionKey: "Image data conversion failed"])))
             return
         }
 
@@ -210,7 +215,13 @@ class MessageStore: MessageProtocol {
                 }
 
                 guard let downloadURL = url else {
-                    completion(.failure(NSError(domain: "URLRetrievalError", code: 500, userInfo: [NSLocalizedDescriptionKey: "Failed to retrieve download URL"])))
+                    completion(
+                        .failure(
+                            NSError(
+                                domain: "URLRetrievalError", code: 500,
+                                userInfo: [
+                                    NSLocalizedDescriptionKey: "Failed to retrieve download URL"
+                                ])))
                     return
                 }
 

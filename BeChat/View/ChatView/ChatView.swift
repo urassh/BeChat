@@ -1,6 +1,6 @@
-import SwiftUI
 import FirebaseAuth
 import FirebaseCore
+import SwiftUI
 
 struct ChatView: View {
     @State var chat = ""
@@ -8,34 +8,37 @@ struct ChatView: View {
     @State private var uid = Auth.auth().currentUser?.uid ?? ""
     @Binding var partner: String
     @State private var repository: MessageProtocol = MessageStore()
-    
+
     var body: some View {
         VStack {
             Spacer(minLength: 30)
-            
+
             ScrollView(.vertical) {
                 ForEach(messages, id: \.id) { message in
                     HStack {
                         if uid == message.to_id {
                             Spacer()
-                            MessageView(message: message,color: Color(red: 0.9, green: 0.9, blue: 0.97))
-                            
-                        } else {
-                            MessageView(message: message,  color: Color(red: 0.86, green: 0.86, blue: 0.86))
+                            MessageView(
+                                message: message, color: Color(red: 0.9, green: 0.9, blue: 0.97))
+
+                        }
+                        else {
+                            MessageView(
+                                message: message, color: Color(red: 0.86, green: 0.86, blue: 0.86))
                             Spacer()
                         }
                     }
                 }
             }
             .padding(.leading, 30)
-            
+
             HStack {
                 TextField("メッセージを送信", text: $chat)
                     .textFieldStyle(.roundedBorder)
                     .padding()
                 Button(action: {
                     guard !chat.isEmpty else { return }
-                    
+
                     let message = TextMessage(
                         id: UUID(),
                         from_id: uid,
@@ -43,14 +46,14 @@ struct ChatView: View {
                         contents: chat,
                         timestamp: Timestamp()
                     )
-                    
+
                     repository.send(with: message)
                     chat = ""
                 }) {
                     Image(systemName: "paperplane.fill")
                 }
             }
-      
+
         }
         .padding()
         .onAppear {
@@ -74,9 +77,9 @@ struct ChatView: View {
 struct MessageView: View {
     let message: TextMessage
     @State var color: Color
-    
+
     var body: some View {
-        if message.message_type == "image"  {
+        if message.message_type == "image" {
             if let imageURL = URL(string: message.contents) {
                 AsyncImage(url: imageURL) { image in
                     image.resizable()
@@ -87,16 +90,16 @@ struct MessageView: View {
                         .frame(maxWidth: 300)
                 }
             }
-        } else {
+        }
+        else {
             // テキストメッセージを表示
             TextView(
                 text: message.contents,
-                color:color
+                color: color
             )
         }
     }
 }
-
 
 struct TextView: View {
     @State var text: String

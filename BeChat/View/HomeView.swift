@@ -5,8 +5,8 @@
 //  Created by 浦山秀斗 on 2024/08/10.
 //
 
-import SwiftUI
 import FirebaseAuth
+import SwiftUI
 
 struct HomeView: View {
     @State var isTapped = false
@@ -21,31 +21,32 @@ struct HomeView: View {
         NavigationView {
             VStack {
                 Divider()
-                
+
                 Spacer()
-                
+
                 Text("今日のChatter")
                     .font(.largeTitle)
                     .fontWeight(.heavy)
-                
+
                 Text("さぁあなたも始めよう")
                     .font(.headline)
                     .fontWeight(.semibold)
-                
+
                 Spacer()
-                
+
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 20) {
-                        ForEach(chats) {chat in
+                        ForEach(chats) { chat in
                             let partnerId = chat.from_id == uid ? chat.to_id : chat.from_id
                             let partnerName = names[partnerId] ?? "Loading...！"
                             let imageUrl = chat.last_image
-                            
+
                             CardView(name: .constant(partnerName), imageURL: .constant(imageUrl))
                                 .onTapGesture {
                                     if chat.from_id != uid {
                                         partner = chat.from_id
-                                    } else {
+                                    }
+                                    else {
                                         partner = chat.to_id
                                     }
                                     isTapped = true
@@ -54,7 +55,7 @@ struct HomeView: View {
                     }
                     .padding()
                 }
-                
+
                 NavigationLink(destination: DrawView()) {
                     Image(systemName: "paperplane.fill")
                         .resizable()
@@ -67,34 +68,31 @@ struct HomeView: View {
                         .shadow(radius: 10)
                         .padding(.top, 80)
                 }
-                
+
                 Spacer()
                     .sheet(
                         isPresented: $isTapped,
                         content: {
-                            ChatView( partner: $partner)
-                        })
-                
+                            ChatView(partner: $partner)
+                        }
+                    )
+
                     .onAppear {
-                        
-                        
-                    
-                      
+
                         messageRepository.fetchChatAll(for: uid) { result in
                             switch result {
                             case .success(let messages):
                                 DispatchQueue.main.async {
                                     self.chats = messages
-                                getNames()
-                             
-                
+                                    getNames()
+
                                 }
                             case .failure(let error):
                                 print("Error fetching messages: \(error)")
                             }
                         }
                     }
-                
+
             }
         }
     }
@@ -110,13 +108,14 @@ struct HomeView: View {
                         print("Fetched name: \(name) for partnerId: \(partnerId)")
                     }
                 }
-                
+
                 // names への代入前にデバッグ情報を追加
                 DispatchQueue.main.async {
                     print("Assigning names: \(nameDict)")
                     names = nameDict
                 }
-            } catch {
+            }
+            catch {
                 print("Error fetching names: \(error)")
             }
         }

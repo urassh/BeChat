@@ -13,7 +13,7 @@ struct CardView: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-     
+
                 VStack(alignment: .leading) {
                     Text(name)
                         .font(.headline)
@@ -34,10 +34,10 @@ struct CardView: View {
                 ProgressView()
                     .frame(maxWidth: 300)
             }
-                .background(Color.white)
-                .cornerRadius(10)
-                .padding(.horizontal)
-                .padding(.bottom, 10)
+            .background(Color.white)
+            .cornerRadius(10)
+            .padding(.horizontal)
+            .padding(.bottom, 10)
             Spacer()
         }
         .frame(width: 230, height: 370)
@@ -54,4 +54,3 @@ struct CardView: View {
 #Preview {
     CardView(name: .constant("saki"), imageURL: .constant(""))
 }
-
