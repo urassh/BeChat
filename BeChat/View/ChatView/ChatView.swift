@@ -11,7 +11,7 @@ import SwiftUI
 struct ChatView: View {
     @State var chat = ""
     @State var messages = [TextMessage]()
-    @State var uid = ""
+    @State var uid = Auth.auth().currentUser?.uid
 
     var body: some View {
         VStack {

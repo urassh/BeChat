@@ -13,30 +13,30 @@ struct DrawView: View {
     @State private var image: UIImage = UIImage(named: "sample")!
 
     var body: some View {
-        NavigationView {
-            penViewInstance
-                .toolbar {
 
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        Button(action: {
-                            penViewInstance.undo()
-                        }) {
-                            Image(systemName: "arrowshape.turn.up.backward.circle")
-                        }
-                    }
+        penViewInstance
+            .toolbar {
 
-                    //送信
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button(action: {
-                            image = penViewInstance.saveImage()
-
-                        }) {
-                            Image(systemName: "paperplane.fill")
-                        }
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button(action: {
+                        penViewInstance.undo()
+                    }) {
+                        Image(systemName: "arrowshape.turn.up.backward.circle")
                     }
                 }
-        }
+
+                //送信
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: {
+                        image = penViewInstance.saveImage()
+
+                    }) {
+                        Image(systemName: "paperplane.fill")
+                    }
+                }
+            }
     }
+
 }
 
 struct PenView: UIViewRepresentable {
