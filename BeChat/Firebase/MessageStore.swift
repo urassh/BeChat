@@ -7,11 +7,15 @@
 
 import FirebaseFirestore
 import FirebaseStorage
+import FirebaseAuth
 
 class MessageStore: MessageProtocol {
+   
+    
     private let db = Firestore.firestore()
     private let storage = Storage.storage()
-    private let COLLECTION = "messages"
+    private let COLLECTION = "messages"    
+    private let CHATS_COLLECTION = "chats"
     private let STORAGE_URL = "gs://bechat-0811.appspot.com/image_message"
     private var listener: ListenerRegistration?
 
@@ -25,8 +29,20 @@ class MessageStore: MessageProtocol {
         }
     }
 
-    func fetchAll(completion: @escaping (Result<[TextMessage], Error>) -> Void) {
-        listener = db.collection(COLLECTION).addSnapshotListener { querySnapshot, error in
+   
+
+    func fetchAll(for partnerId: String, completion: @escaping (Result<[TextMessage], Error>) -> Void) {
+        guard let currentUserId = Auth.auth().currentUser?.uid else {
+            completion(.failure(NSError(domain: "NoUser", code: 401, userInfo: nil)))
+            return
+        }
+
+        let query = db.collection(COLLECTION)
+            .whereField("from_id", in: [currentUserId, partnerId])
+            .whereField("to_id", in: [currentUserId, partnerId])
+            .order(by: "timestamp", descending: true) // タイムスタンプでソート
+
+        query.addSnapshotListener { (querySnapshot, error) in
             if let error = error {
                 completion(.failure(error))
                 return
@@ -40,8 +56,35 @@ class MessageStore: MessageProtocol {
             let messages = documents.compactMap { queryDocumentSnapshot in
                 try? queryDocumentSnapshot.data(as: TextMessage.self)
             }
+
             completion(.success(messages))
         }
+    }
+
+ 
+  
+
+    func fetchChatAll(for userId: String, completion: @escaping (Result<[Chat], Error>) -> Void) {
+        db.collection(CHATS_COLLECTION)
+            .document(userId)
+            .collection("user_chats")
+            .order(by: "timestamp", descending: true)
+            .getDocuments { querySnapshot, error in
+                if let error = error {
+                    completion(.failure(error))
+                    return
+                }
+                
+                guard let documents = querySnapshot?.documents else {
+                    completion(.success([]))
+                    return
+                }
+                
+                let chats = documents.compactMap { document in
+                    return try? document.data(as: Chat.self)
+                }
+                completion(.success(chats))
+            }
     }
 
     func getTextMessage(id: String) async -> TextMessage? {
@@ -77,7 +120,7 @@ class MessageStore: MessageProtocol {
             let image = UIImage(data: data)
 
             return ImageMessage(
-                id: message.id, from_id: message.from_id, to_id: message.to_id, image: image)
+                id: message.id, from_id: message.from_id, to_id: message.to_id, image: image, timestamp: Timestamp())
         }
         catch {
             print("Error occurred! : \(error)")
@@ -88,6 +131,11 @@ class MessageStore: MessageProtocol {
     internal func sendText(with message: TextMessage) {
         do {
             try db.collection(COLLECTION).document(message.id.uuidString).setData(from: message)
+            let chatData =  Chat(id: UUID(), from_id: message.from_id, to_id: message.to_id, last_message: message.contents, timestamp: Timestamp())
+                        
+          try db.collection(CHATS_COLLECTION).document(message.from_id).collection("user_chats").document(message.to_id).setData(from: chatData)
+                    
+         try db.collection(CHATS_COLLECTION).document(message.to_id).collection("user_chats").document(message.from_id).setData(from: chatData)
         }
         catch {
             print("Error Writing Document: \(error)")
@@ -101,7 +149,12 @@ class MessageStore: MessageProtocol {
 
         do {
             try db.collection(COLLECTION).document(message.id.uuidString).setData(from: textMessage)
-
+            
+            let chatData =  Chat(id: UUID(), from_id: textMessage.from_id, to_id: textMessage.to_id, last_message: "", timestamp: Timestamp())
+                        
+          try db.collection(CHATS_COLLECTION).document(message.from_id).collection("user_chats").document(message.to_id).setData(from: chatData)
+                    
+         try db.collection(CHATS_COLLECTION).document(message.to_id).collection("user_chats").document(message.from_id).setData(from: chatData)
             let ref = storage.reference(forURL: STORAGE_URL).child(message.id.uuidString)
             guard let jpegData = convertToJpegData(uiImage: image) else {
                 print("画像の変換に失敗しました")

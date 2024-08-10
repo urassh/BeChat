@@ -8,21 +8,16 @@
 import SwiftUI
 
 struct CardView: View {
+    @Binding var name: String
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                Circle()
-                    .fill(Color.white)
-                    .frame(width: 40, height: 40)
-
+     
                 VStack(alignment: .leading) {
-                    Text("urassh")
+                    Text(name)
                         .font(.headline)
                         .foregroundColor(.white)
 
-                    Text("2024.10.11")
-                        .font(.subheadline)
-                        .foregroundColor(.white)
                 }
                 Spacer()
             }
@@ -58,5 +53,5 @@ struct ContentView_Previews: PreviewProvider {
 }
 
 #Preview {
-    CardView()
+    CardView(name: .constant("saki"))
 }

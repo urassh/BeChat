@@ -8,6 +8,7 @@
 import FirebaseAuth
 import PencilKit
 import SwiftUI
+import FirebaseCore
 
 struct DrawView: View {
     @State private var penViewInstance = PenView()
@@ -35,7 +36,7 @@ struct DrawView: View {
                     Button(action: {
                         image = penViewInstance.saveImage()
                         let imageMessage = ImageMessage(
-                            id: UUID(), from_id: "", to_id: uid, image: image)
+                            id: UUID(), from_id: "JAOfmCh4WqDRGqumkgtIpxGkGD4r1", to_id: uid, image: image,timestamp: Timestamp())
 
                         repository.send(with: imageMessage)
                         self.presentation.wrappedValue.dismiss()
