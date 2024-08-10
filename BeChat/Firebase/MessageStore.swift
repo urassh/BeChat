@@ -7,7 +7,6 @@
 
 import FirebaseFirestore
 import FirebaseStorage
-import Foundation
 
 class MessageStore: MessageProtocol {
     private let db = Firestore.firestore()
