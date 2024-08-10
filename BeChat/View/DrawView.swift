@@ -5,9 +5,9 @@
 //  Created by 浦山秀斗 on 2024/08/05.
 //
 
+import FirebaseAuth
 import PencilKit
 import SwiftUI
-import FirebaseAuth
 
 struct DrawView: View {
     @State private var penViewInstance = PenView()
@@ -33,8 +33,9 @@ struct DrawView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
                         image = penViewInstance.saveImage()
-                        let imageMessage = ImageMessage(id: UUID(), from_id: "", to_id: uid, image: image)
-                        
+                        let imageMessage = ImageMessage(
+                            id: UUID(), from_id: "", to_id: uid, image: image)
+
                         repository.send(with: imageMessage)
                         self.presentation.wrappedValue.dismiss()
 
@@ -87,19 +88,12 @@ struct PenView: UIViewRepresentable {
     func saveImage() -> UIImage {
         let bounds = self.pkcView.bounds
         let scale = UIScreen.main.scale
-
         UIGraphicsBeginImageContextWithOptions(bounds.size, false, scale)
-
         self.pkcView.drawing.image(from: bounds, scale: scale).draw(in: bounds)
-
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-
+         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-
         return image!
     }
-
-
 
     func updateUIView(_ uiView: PKCanvasView, context: Context) {
     }
