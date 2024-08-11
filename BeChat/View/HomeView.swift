@@ -7,6 +7,7 @@
 
 import FirebaseAuth
 import SwiftUI
+import UIKit
 
 struct HomeView: View {
     @Binding var homePath: [HomePath]
@@ -19,6 +20,7 @@ struct HomeView: View {
     @State private var messageRepository: MessageProtocol = MessageStore()
     @State private var chats = [Chat]()
     @State var names = [String: String]()
+    @State var lastImageUrl: String = ""
 
     var body: some View {
         VStack {
@@ -40,13 +42,15 @@ struct HomeView: View {
                 HStack(spacing: 20) {
                     ForEach(chats) { chat in
                         let uid = Auth.auth().currentUser!.uid
-                        let partnerId = chat.from_id == uid ? chat.to_id : chat.from_id
-                        let partnerName = names[partnerId] ?? "Loading...！"
-                        let imageUrl = chat.last_image
+                        let partner_id = chat.from_id
+                        let partner_name = names[partner_id] ?? "Loading...！"
 
-                        CardView(name: partnerName, imageURL: imageUrl)
+                        CardView(name: partnerName, imageURL: lastImageUrl)
                             .onTapGesture {
                                 partnerUID = chat.from_id
+                                partnerName = partner_name
+                                
+                                print("partnerId : ", partnerUID)
                                 isTapped = true
                             }
                     }
@@ -91,7 +95,9 @@ struct HomeView: View {
 
         }
         .sheet(isPresented: $isTapped) {
-            ChatView(partner: partnerUID)
+            let uid = Auth.auth().currentUser!.uid
+            
+            ChatView(homePath: $homePath, partner_uid: $partnerUID, partner_name: $partnerName, my_uid: uid)
         }
         .sheet(isPresented: $isFriend) {
             FriendView()
@@ -115,6 +121,10 @@ struct HomeView: View {
                 for chat in chats {
                     let uid = Auth.auth().currentUser!.uid
                     let partnerId = chat.from_id == uid ? chat.to_id : chat.from_id
+                    
+                    lastImageUrl = chat.last_image == "" ? lastImageUrl : chat.last_image
+                    
+                    print(chat.from_id, lastImageUrl)
                     if nameDict[partnerId] == nil {
                         let name = await repository.getName(uid: partnerId)
                         nameDict[partnerId] = name
