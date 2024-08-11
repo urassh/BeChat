@@ -14,4 +14,5 @@ protocol MessageProtocol {
     func fetchChatAll(for userId: String, completion: @escaping (Result<[Chat], Error>) -> Void)
     func getTextMessage(id: String) async -> TextMessage?
     func getImageMessage(id: String) async -> ImageMessage?
+    func getToken(for uid: String, completion: @escaping (Result<String, Error>) -> Void) 
 }

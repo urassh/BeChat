@@ -229,5 +229,12 @@ class MessageStore: MessageProtocol {
             }
         }
     }
+    func getToken(for uid: String, completion: @escaping (Result<String, Error>) -> Void) {
+        db.collection("users").document(uid).getDocument(){result,_ in
+           let data = result?.data()
+       let token = data?["fcm"]
+       completion(.success(token as! String))
+        }
+    }
 
 }

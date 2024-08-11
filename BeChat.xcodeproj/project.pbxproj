@@ -39,6 +39,8 @@
 		72A8E8ED2C68206A0058AA93 /* FriendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A8E8EC2C68206A0058AA93 /* FriendView.swift */; };
 		72A8E8EF2C6821C60058AA93 /* FriendProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A8E8EE2C6821C60058AA93 /* FriendProtocol.swift */; };
 		72A8E8F12C6821D60058AA93 /* FriendStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A8E8F02C6821D60058AA93 /* FriendStore.swift */; };
+		72A8E8F32C6858090058AA93 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A8E8F22C6858090058AA93 /* Notification.swift */; };
+		72A8E8F82C687D7E0058AA93 /* PushNotificationSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A8E8F72C687D7E0058AA93 /* PushNotificationSender.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,6 +70,9 @@
 		72A8E8EC2C68206A0058AA93 /* FriendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendView.swift; sourceTree = "<group>"; };
 		72A8E8EE2C6821C60058AA93 /* FriendProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendProtocol.swift; sourceTree = "<group>"; };
 		72A8E8F02C6821D60058AA93 /* FriendStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendStore.swift; sourceTree = "<group>"; };
+		72A8E8F22C6858090058AA93 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
+		72A8E8F62C6867090058AA93 /* BeChat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BeChat.entitlements; sourceTree = "<group>"; };
+		72A8E8F72C687D7E0058AA93 /* PushNotificationSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationSender.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +99,7 @@
 			children = (
 				102B203D2C60722B00DCE393 /* BeChat */,
 				102B203C2C60722B00DCE393 /* Products */,
+				72A8E8F52C685E3C0058AA93 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -108,6 +114,8 @@
 		102B203D2C60722B00DCE393 /* BeChat */ = {
 			isa = PBXGroup;
 			children = (
+				72A8E8F62C6867090058AA93 /* BeChat.entitlements */,
+				72A8E8F42C6858110058AA93 /* Notification */,
 				72A8E8E82C6773840058AA93 /* Info.plist */,
 				72A8E8E52C6773410058AA93 /* Font */,
 				1067507C2C609F1D0035537F /* View */,
@@ -119,6 +127,7 @@
 				102B20442C60722C00DCE393 /* Preview Content */,
 				102B204C2C60730300DCE393 /* GoogleService-Info.plist */,
 				102B203E2C60722B00DCE393 /* BeChatApp.swift */,
+				72A8E8F72C687D7E0058AA93 /* PushNotificationSender.swift */,
 			);
 			path = BeChat;
 			sourceTree = "<group>";
@@ -225,6 +234,21 @@
 			path = FriendView;
 			sourceTree = "<group>";
 		};
+		72A8E8F42C6858110058AA93 /* Notification */ = {
+			isa = PBXGroup;
+			children = (
+				72A8E8F22C6858090058AA93 /* Notification.swift */,
+			);
+			path = Notification;
+			sourceTree = "<group>";
+		};
+		72A8E8F52C685E3C0058AA93 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -322,11 +346,13 @@
 				72A8E8EF2C6821C60058AA93 /* FriendProtocol.swift in Sources */,
 				72A8E8D92C6719990058AA93 /* ChatView.swift in Sources */,
 				102B206B2C607C9F00DCE393 /* MessageStore.swift in Sources */,
+				72A8E8F82C687D7E0058AA93 /* PushNotificationSender.swift in Sources */,
 				102B20642C60782100DCE393 /* Message.swift in Sources */,
 				102B20612C6077E500DCE393 /* MessageProtocol.swift in Sources */,
 				10FAC57A2C6883E3006CFBD7 /* BeChatTextFieldStyle.swift in Sources */,
 				72A8E8DE2C671ACF0058AA93 /* MessageimageView.swift in Sources */,
 				72A8E8F12C6821D60058AA93 /* FriendStore.swift in Sources */,
+				72A8E8F32C6858090058AA93 /* Notification.swift in Sources */,
 				72A8E8DC2C671AA90058AA93 /* MessageListView.swift in Sources */,
 				102B203F2C60722B00DCE393 /* BeChatApp.swift in Sources */,
 				102D674A2C64BFDF006A90B5 /* AuthImpl.swift in Sources */,
@@ -460,10 +486,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_ENTITLEMENTS = BeChat/BeChat.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"BeChat/Preview Content\"";
-				DEVELOPMENT_TEAM = NJ55RU4U3A;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = TVH687AC7F;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BeChat/Info.plist;
@@ -480,6 +509,8 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.shuto.BeChat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "BeChatPushApp Provisioning Profiles";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -491,10 +522,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_ENTITLEMENTS = BeChat/BeChat.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"BeChat/Preview Content\"";
-				DEVELOPMENT_TEAM = NJ55RU4U3A;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = TVH687AC7F;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BeChat/Info.plist;
@@ -511,6 +545,8 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.shuto.BeChat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "BeChatPushApp Provisioning Profiles";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

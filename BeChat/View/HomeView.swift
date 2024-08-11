@@ -7,6 +7,7 @@
 
 import FirebaseAuth
 import SwiftUI
+import FirebaseMessaging
 import UIKit
 
 struct HomeView: View {
@@ -20,6 +21,11 @@ struct HomeView: View {
     @State private var messageRepository: MessageProtocol = MessageStore()
     @State private var chats = [Chat]()
     @State var names = [String: String]()
+    @State var isFriend = false
+    @State var friendsList = [AppUser]()
+    @State var randomFriend = AppUser(uid: "", name: "")
+    @State private var friendRepository: FriendProtocol = FriendStore()
+      
     @State var lastImageUrl: String = ""
 
     var body: some View {
@@ -58,6 +64,70 @@ struct HomeView: View {
                 }
             }
 
+                NavigationLink(destination: DrawView(partner: randomFriend)) {
+                    Image(systemName: "paperplane.fill")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 40, height: 40)
+                        .foregroundColor(.white)
+                        .padding()
+                        .background(Color.cyan)
+                        .clipShape(Circle())
+                        .shadow(radius: 10)
+                        .padding(.top, 80)
+                }
+
+                Spacer()
+                    .sheet(
+                        isPresented: $isTapped,
+                        content: {
+                            ChatView(partner: $partner)
+                        }
+                    )
+                    .sheet(
+                        isPresented: $isFriend,
+                        content: {
+                            FriendView()
+                        }
+                    )
+
+                    .onAppear {
+                        
+                        friendRepository.fetchFriends(for: uid){ result in
+                         
+                       
+                                friendsList = result
+                            randomFriend = friendsList.randomElement() ?? AppUser(uid: "", name: "")
+                           
+                            
+                        }
+                        messageRepository.fetchChatAll(for: uid) { result in
+                            switch result {
+                            case .success(let messages):
+                                DispatchQueue.main.async {
+                                    self.chats = messages
+                                    getNames()
+
+                                }
+                            case .failure(let error):
+                                print("Error fetching messages: \(error)")
+                            }
+                        }
+
+                    }
+                    .toolbar {
+
+                        ToolbarItem(placement: .navigationBarLeading) {
+                            Button(action: {
+                                isFriend = true
+
+                            }) {
+                                Image(systemName: "person.fill.badge.plus")
+                            }
+                        }
+                    }
+
+=======
             NavigationLink(destination: DrawView(homePath: $homePath)) {
                 Image(systemName: "paperplane.fill")
                     .resizable()
@@ -134,7 +204,6 @@ struct HomeView: View {
 
                 // names への代入前にデバッグ情報を追加
                 DispatchQueue.main.async {
-
                     names = nameDict
                 }
             }

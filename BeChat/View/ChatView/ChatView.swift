@@ -13,6 +13,10 @@ struct ChatView: View {
     @State var chat = ""
     @State var messages = [TextMessage]()
     @State private var repository: MessageProtocol = MessageStore()
+<<<<<<< HEAD
+    @State var token = ""
+    
+=======
     
     private let myChatColor: Color = Color(red: 0.9, green: 0.9, blue: 0.97)
     private let partnerChatColor: Color = Color(red: 0.86, green: 0.86, blue: 0.86)
@@ -25,20 +29,23 @@ struct ChatView: View {
         return my_uid == message.from_id
     }
 
+
     var body: some View {
         VStack {
             Spacer(minLength: 30)
             
+
             Text(partner_name + "とのChat")
                 .font(.title)
                 .bold()
             
             Divider()
 
+
             ScrollView(.vertical) {
                 ForEach(sortedMessages.reversed(), id: \.id) { message in
                     HStack {
-                        if isMyMessage(for: message) {
+                if isMyMessage(for: message) {
                             Spacer()
                             MessageView(message: message, color: myChatColor)
                         }
@@ -51,6 +58,7 @@ struct ChatView: View {
             }
             .padding(.leading, 30)
 
+
             
             Divider()
             HStack {
@@ -60,6 +68,7 @@ struct ChatView: View {
                 
                 Button(action: {
                     guard !chat.isEmpty else { return }
+
                     if Auth.auth().currentUser == nil, Auth.auth().currentUser!.uid.isEmpty {
                         homePath.removeLast(homePath.count)
                         return
@@ -67,42 +76,66 @@ struct ChatView: View {
                     
                     let uid = Auth.auth().currentUser!.uid
 
-                    let message = TextMessage(
+     let message = TextMessage(
                         id: UUID(),
                         from_id: uid,
                         to_id: partner_uid,
                         contents: chat,
                         timestamp: Timestamp()
                     )
-
+                    
                     repository.send(with: message)
+                    // 通知を送信
+                    let payload: [String: Any] = [
+                        "to": token,
+                        "notification": [
+                            "title": "新しいメッセージ",
+                            "body": message.contents,
+                            "sound": "default"
+                        ],
+                        "data": [
+                            "chat_id": message.id.uuidString
+                        ]
+                    ]
+                    PushNotificationSender().sendFCMNotification(payload: payload)
                     chat = ""
                 }) {
                     Image(systemName: "paperplane.fill")
                 }
             }
-
+            
         }
         .padding()
         .onAppear {
+            repository.getToken(for: partner) { result in
             repository.fetchAll(for: partner_uid) { result in
                 switch result {
-                case .success(let messages):
-                    DispatchQueue.main.async {
-                        self.messages = messages
-                    }
+                case .success(let tokens):
+                    token = tokens
+                    print(tokens)
                 case .failure(let error):
                     print("Error fetching messages: \(error)")
+                }
+                repository.fetchAll(for: partner) { result in
+                    switch result {
+                    case .success(let messages):
+                        DispatchQueue.main.async {
+                            self.messages = messages
+                        }
+                    case .failure(let error):
+                        print("Error fetching messages: \(error)")
+                    }
                 }
             }
         }
     }
+   
 }
 
 struct MessageView: View {
     let message: TextMessage
     @State var color: Color
-
+    
     var body: some View {
         if message.message_type == "image" {
             if let imageURL = URL(string: message.contents) {
