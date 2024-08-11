@@ -39,7 +39,7 @@ class MessageStore: MessageProtocol {
         let query = db.collection(COLLECTION)
             .whereField("from_id", in: [currentUserId, partnerId])
             .whereField("to_id", in: [currentUserId, partnerId])
-            .order(by: "timestamp", descending: true)  // タイムスタンプでソート
+            .order(by: "timestamp", descending: false)  // タイムスタンプでソート
 
         query.addSnapshotListener { (querySnapshot, error) in
             if let error = error {
