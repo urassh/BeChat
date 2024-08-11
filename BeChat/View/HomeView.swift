@@ -17,6 +17,7 @@ struct HomeView: View {
     @State var uid = Auth.auth().currentUser?.uid ?? ""
     @State private var chats = [Chat]()
     @State var names = [String: String]()
+    @State var isFriend = false
     var body: some View {
         NavigationView {
             VStack {
@@ -76,6 +77,12 @@ struct HomeView: View {
                             ChatView(partner: $partner)
                         }
                     )
+                    .sheet(
+                        isPresented: $isFriend,
+                        content: {
+                            FriendView()
+                        }
+                    )
 
                     .onAppear {
 
@@ -91,9 +98,22 @@ struct HomeView: View {
                                 print("Error fetching messages: \(error)")
                             }
                         }
+
+                    }
+                    .toolbar {
+
+                        ToolbarItem(placement: .navigationBarLeading) {
+                            Button(action: {
+                                isFriend = true
+
+                            }) {
+                                Image(systemName: "person.fill.badge.plus")
+                            }
+                        }
                     }
 
             }
+
         }
     }
     private func getNames() {
@@ -111,13 +131,11 @@ struct HomeView: View {
 
                 // names への代入前にデバッグ情報を追加
                 DispatchQueue.main.async {
-                    print("Assigning names: \(nameDict)")
+
                     names = nameDict
                 }
             }
-            catch {
-                print("Error fetching names: \(error)")
-            }
+
         }
     }
 
