@@ -29,6 +29,7 @@
 		102D674C2C666E12006A90B5 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 102D674B2C666E12006A90B5 /* HomeView.swift */; };
 		102D674F2C666F91006A90B5 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 102D674E2C666F91006A90B5 /* CardView.swift */; };
 		1067507E2C609F2E0035537F /* DrawView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1067507D2C609F2E0035537F /* DrawView.swift */; };
+		10FAC57A2C6883E3006CFBD7 /* BeChatTextFieldStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10FAC5792C6883E3006CFBD7 /* BeChatTextFieldStyle.swift */; };
 		72A8E8D92C6719990058AA93 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A8E8D82C6719980058AA93 /* ChatView.swift */; };
 		72A8E8DC2C671AA90058AA93 /* MessageListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A8E8DB2C671AA90058AA93 /* MessageListView.swift */; };
 		72A8E8DE2C671ACF0058AA93 /* MessageimageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A8E8DD2C671ACF0058AA93 /* MessageimageView.swift */; };
@@ -56,6 +57,7 @@
 		102D674B2C666E12006A90B5 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		102D674E2C666F91006A90B5 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		1067507D2C609F2E0035537F /* DrawView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawView.swift; sourceTree = "<group>"; };
+		10FAC5792C6883E3006CFBD7 /* BeChatTextFieldStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeChatTextFieldStyle.swift; sourceTree = "<group>"; };
 		72A8E8D82C6719980058AA93 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		72A8E8DB2C671AA90058AA93 /* MessageListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageListView.swift; sourceTree = "<group>"; };
 		72A8E8DD2C671ACF0058AA93 /* MessageimageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageimageView.swift; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 			isa = PBXGroup;
 			children = (
 				102D674E2C666F91006A90B5 /* CardView.swift */,
+				10FAC5792C6883E3006CFBD7 /* BeChatTextFieldStyle.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -321,6 +324,7 @@
 				102B206B2C607C9F00DCE393 /* MessageStore.swift in Sources */,
 				102B20642C60782100DCE393 /* Message.swift in Sources */,
 				102B20612C6077E500DCE393 /* MessageProtocol.swift in Sources */,
+				10FAC57A2C6883E3006CFBD7 /* BeChatTextFieldStyle.swift in Sources */,
 				72A8E8DE2C671ACF0058AA93 /* MessageimageView.swift in Sources */,
 				72A8E8F12C6821D60058AA93 /* FriendStore.swift in Sources */,
 				72A8E8DC2C671AA90058AA93 /* MessageListView.swift in Sources */,
