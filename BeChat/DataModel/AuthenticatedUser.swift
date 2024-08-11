@@ -7,9 +7,12 @@
 
 import Foundation
 
-struct AppUser: Decodable,Encodable {
+struct AppUser:Decodable,Encodable {
+  
+    
     let uid: String
     let name: String
+ 
 }
 
 struct AuthenticatedUser: Codable {

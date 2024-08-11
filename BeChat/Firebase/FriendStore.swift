@@ -43,6 +43,21 @@ class FriendStore: FriendProtocol{
             completion(.failure(error))
         }
     }
+    func fetchFriends(for userId: String, completion: @escaping ([AppUser]) -> Void) {
+     
+        db.collection("users").document(userId).collection("friends").getDocuments { (snapshot, error) in
+            if let error = error {
+                print("Error fetching friends: \(error)")
+                completion([])  
+                return
+            }
+            
+            let friends = snapshot?.documents.compactMap { document in
+                try? document.data(as: AppUser.self)
+            } ?? []
+            completion(friends)
+        }
+    }
 
 
     

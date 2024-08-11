@@ -98,6 +98,7 @@ struct HomeView: View {
                                 print("Error fetching messages: \(error)")
                             }
                         }
+                        
                     }
                     .toolbar {
                         
