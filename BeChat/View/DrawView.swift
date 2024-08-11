@@ -46,7 +46,8 @@ struct DrawView: View {
                             image: image, timestamp: Timestamp())
 
                         repository.send(with: imageMessage)
-                        homePath.removeLast()
+                        
+                        homePath.append(.home)
                     }) {
                         Image(systemName: "paperplane.fill")
                     }
