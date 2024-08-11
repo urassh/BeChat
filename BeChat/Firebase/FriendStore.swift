@@ -5,32 +5,42 @@
 //  Created by saki on 2024/08/11.
 //
 
-import Foundation
 import FirebaseAuth
 import FirebaseFirestore
-class FriendStore: FriendProtocol{
+import Foundation
+
+class FriendStore: FriendProtocol {
     private let db = Firestore.firestore()
     func searchUser(by uid: String, completion: @escaping (Result<AppUser, Error>) -> Void) {
         let userRef = db.collection("users").document(uid)
-        
+
         userRef.getDocument { document, error in
             if let error = error {
                 completion(.failure(error))
                 return
             }
-            
-            guard let document = document, document.exists, let user = try? document.data(as: AppUser.self) else {
-                completion(.failure(NSError(domain: "UserNotFound", code: 404, userInfo: [NSLocalizedDescriptionKey: "User not found"])))
+
+            guard let document = document, document.exists,
+                let user = try? document.data(as: AppUser.self)
+            else {
+                completion(
+                    .failure(
+                        NSError(
+                            domain: "UserNotFound", code: 404,
+                            userInfo: [NSLocalizedDescriptionKey: "User not found"])))
                 return
             }
-            
+
             completion(.success(user))
         }
     }
-    
-    func addFriend(userId: String, friend: AppUser, completion: @escaping (Result<Void, Error>) -> Void) {
-        let friendRef = db.collection("users").document(userId).collection("friends").document(friend.uid)
-        
+
+    func addFriend(
+        userId: String, friend: AppUser, completion: @escaping (Result<Void, Error>) -> Void
+    ) {
+        let friendRef = db.collection("users").document(userId).collection("friends").document(
+            friend.uid)
+
         do {
             try friendRef.setData(from: friend) { error in
                 if let error = error {
@@ -39,26 +49,27 @@ class FriendStore: FriendProtocol{
                 }
                 completion(.success(()))
             }
-        } catch {
+        }
+        catch {
             completion(.failure(error))
         }
     }
     func fetchFriends(for userId: String, completion: @escaping ([AppUser]) -> Void) {
-     
-        db.collection("users").document(userId).collection("friends").getDocuments { (snapshot, error) in
+
+        db.collection("users").document(userId).collection("friends").getDocuments {
+            (snapshot, error) in
             if let error = error {
                 print("Error fetching friends: \(error)")
-                completion([])  
+                completion([])
                 return
             }
-            
-            let friends = snapshot?.documents.compactMap { document in
-                try? document.data(as: AppUser.self)
-            } ?? []
+
+            let friends =
+                snapshot?.documents.compactMap { document in
+                    try? document.data(as: AppUser.self)
+                } ?? []
             completion(friends)
         }
     }
 
-
-    
 }

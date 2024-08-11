@@ -5,65 +5,72 @@
 //  Created by saki on 2024/08/11.
 //
 
-import SwiftUI
 import FirebaseAuth
+import SwiftUI
 
 struct FriendView: View {
     @State private var uidToSearch = ""
-    @State  var foundUser: AppUser?
+    @State var foundUser: AppUser?
     @State private var errorMessage: String?
     @State var repository: FriendProtocol = FriendStore()
     @State var uid = Auth.auth().currentUser?.uid ?? ""
     @State var friendsList = [AppUser]()
     var body: some View {
-        NavigationView{
+        NavigationView {
             VStack {
-                
-                HStack{
+
+                HStack {
                     TextField("友達のIDを入力", text: $uidToSearch)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .padding()
-                    
-                    Button(action: {
-                        repository.searchUser(by: uidToSearch) { result in
-                            switch result {
-                            case .success(let user):
-                                foundUser = user
-                                errorMessage = nil
-                            case .failure(let error):
-                                foundUser = nil
-                                errorMessage = error.localizedDescription
-                            }
-                        }
-                        
-                    }, label: {
-                        Image(systemName: "magnifyingglass")
-                    })
-                    
-                }
-                if let user = foundUser {
-                    HStack{
-                        Text("\(user.name)")
-                        Button(action: {
-                            repository.addFriend(userId: Auth.auth().currentUser?.uid ?? "", friend: user) { result in
+
+                    Button(
+                        action: {
+                            repository.searchUser(by: uidToSearch) { result in
                                 switch result {
-                                case .success:
-                                    print("追加しました！")
+                                case .success(let user):
+                                    foundUser = user
+                                    errorMessage = nil
                                 case .failure(let error):
-                                    print("友達いません: \(error)")
+                                    foundUser = nil
+                                    errorMessage = error.localizedDescription
                                 }
                             }
-                            
-                        }, label:{
-                            Image(systemName: "person.fill.badge.plus")
+
+                        },
+                        label: {
+                            Image(systemName: "magnifyingglass")
                         })
+
+                }
+                if let user = foundUser {
+                    HStack {
+                        Text("\(user.name)")
+                        Button(
+                            action: {
+                                repository.addFriend(
+                                    userId: Auth.auth().currentUser?.uid ?? "", friend: user
+                                ) { result in
+                                    switch result {
+                                    case .success:
+                                        print("追加しました！")
+                                    case .failure(let error):
+                                        print("友達いません: \(error)")
+                                    }
+                                }
+
+                            },
+                            label: {
+                                Image(systemName: "person.fill.badge.plus")
+                            })
                     }
-                    
-                } else if let errorMessage = errorMessage {
+
+                }
+                else if let errorMessage = errorMessage {
                     Text("エラー: \(errorMessage)")
                         .foregroundColor(.red)
                 }
-                
+
                 Text("あなたのIDは")
                 Text(uid)
                     .textSelection(.enabled)
@@ -74,23 +81,22 @@ struct FriendView: View {
                 List(friendsList, id: \.uid) { user in
                     Text(user.name)
                 }
-                
-                
-       
+
                 .navigationTitle("友達を探す")
-                .onAppear(){
+                .onAppear {
                     repository.fetchFriends(for: uid) { friends in
                         DispatchQueue.main.async {
                             self.friendsList = friends
                             print(friendsList)
                         }
-                        
+
                     }
                 }
             }
-            .padding(.horizontal,20)
-            
-        }    }
+            .padding(.horizontal, 20)
+
+        }
+    }
 }
 
 #Preview {
