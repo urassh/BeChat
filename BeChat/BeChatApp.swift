@@ -10,6 +10,7 @@ import SwiftUI
 import Firebase
 import FirebaseMessaging
 import UserNotifications
+import FirebaseAuth
 
 @main
 struct BeChatApp: App {
@@ -63,6 +64,10 @@ extension AppDelegate: MessagingDelegate {
             print("Error fetching FCM registration token: \(error)")
           } else if let token = token {
             print("FCM registration token: \(token)")
+          let db = Firestore.firestore()
+              if let uid = Auth.auth().currentUser?.uid {
+                  db.collection("users").document(uid)
+              }
           }
         }
     }

@@ -19,17 +19,9 @@ struct HomeView: View {
     @State private var chats = [Chat]()
     @State var names = [String: String]()
     @State var isFriend = false
-
-//    init(){
-//          let center = UNUserNotificationCenter.current()
-//          center.requestAuthorization(options: .alert) { granted, error in
-//              if granted {
-//                  print("許可されました！")
-//              }else{
-//                  print("拒否されました...")
-//              }
-//          }
-//      }
+    @State var friendsList = [AppUser]()
+    @State var randomFriend = AppUser(uid: "", name: "")
+    @State private var friendRepository: FriendProtocol = FriendStore()
       
     var body: some View {
         NavigationView {
@@ -70,7 +62,7 @@ struct HomeView: View {
                     .padding()
                 }
 
-                NavigationLink(destination: DrawView()) {
+                NavigationLink(destination: DrawView(partner: randomFriend)) {
                     Image(systemName: "paperplane.fill")
                         .resizable()
                         .scaledToFit()
@@ -98,8 +90,15 @@ struct HomeView: View {
                     )
 
                     .onAppear {
-                        Notification().sendNotificationRequest()
-
+                        
+                        friendRepository.fetchFriends(for: uid){ result in
+                         
+                       
+                                friendsList = result
+                            randomFriend = friendsList.randomElement() ?? AppUser(uid: "", name: "")
+                           
+                            
+                        }
                         messageRepository.fetchChatAll(for: uid) { result in
                             switch result {
                             case .success(let messages):
@@ -145,7 +144,6 @@ struct HomeView: View {
 
                 // names への代入前にデバッグ情報を追加
                 DispatchQueue.main.async {
-
                     names = nameDict
                 }
             }
