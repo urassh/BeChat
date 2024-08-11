@@ -8,7 +8,7 @@ struct ChatView: View {
     @State private var uid = Auth.auth().currentUser?.uid ?? ""
     @Binding var partner: String
     @State private var repository: MessageProtocol = MessageStore()
-    
+
     var sortedMessages: [TextMessage] {
         return messages.sorted { $0.timestamp.dateValue() > $1.timestamp.dateValue() }
     }

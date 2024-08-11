@@ -18,39 +18,34 @@ struct HomeView: View {
     @State private var chats = [Chat]()
     @State var names = [String: String]()
     @State var isFriend = false
+    @Binding var homePath: [HomePath]
     var body: some View {
-        NavigationView {
-            VStack {
-                Divider()
+        VStack {
+            Divider()
 
-                Spacer()
+            Spacer()
 
-                Text("今日のChatter")
-                    .font(.largeTitle)
-                    .fontWeight(.heavy)
+            Text("今日のChatter")
+                .font(.largeTitle)
+                .fontWeight(.heavy)
 
-                Text("さぁあなたも始めよう")
-                    .font(.headline)
-                    .fontWeight(.semibold)
+            Text("さぁあなたも始めよう")
+                .font(.headline)
+                .fontWeight(.semibold)
 
-                Spacer()
+            Spacer()
 
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 20) {
-                        ForEach(chats) { chat in
-                            let partnerId = chat.from_id == uid ? chat.to_id : chat.from_id
-                            let partnerName = names[partnerId] ?? "Loading...！"
-                            let imageUrl = chat.last_image
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 20) {
+                    ForEach(chats) { chat in
+                        let partnerId = chat.from_id == uid ? chat.to_id : chat.from_id
+                        let partnerName = names[partnerId] ?? "Loading...！"
+                        let imageUrl = chat.last_image
 
-                            CardView(name: .constant(partnerName), imageURL: .constant(imageUrl))
-                                .onTapGesture {
-                                    if chat.from_id != uid {
-                                        partner = chat.from_id
-                                    }
-                                    else {
-                                        partner = chat.to_id
-                                    }
-                                    isTapped = true
+                        CardView(name: .constant(partnerName), imageURL: .constant(imageUrl))
+                            .onTapGesture {
+                                if chat.from_id != uid {
+                                    partner = chat.from_id
                                 }
                         }
                     }
@@ -92,10 +87,9 @@ struct HomeView: View {
                                 DispatchQueue.main.async {
                                     self.chats = messages
                                     getNames()
-
+                                    partner = chat.to_id
                                 }
-                            case .failure(let error):
-                                print("Error fetching messages: \(error)")
+                                isTapped = true
                             }
                         }
 
@@ -111,11 +105,53 @@ struct HomeView: View {
                             }
                         }
                     }
+                }
+                .padding()
 
+            NavigationLink(destination: DrawView(homePath: $homePath)) {
+                Image(systemName: "paperplane.fill")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 40, height: 40)
+                    .foregroundColor(.white)
+                    .padding()
+                    .background(Color.cyan)
+                    .clipShape(Circle())
+                    .shadow(radius: 10)
+                    .padding(.top, 80)
+            }
+
+            Spacer()
+        }
+        .onAppear {
+            if Auth.auth().currentUser == nil, Auth.auth().currentUser!.uid.isEmpty {
+                homePath.removeLast(homePath.count)
+                return
+            }
+
+            print("uid : ", Auth.auth().currentUser!.uid)
+
+            messageRepository.fetchChatAll(for: uid) { result in
+                switch result {
+                case .success(let messages):
+                    DispatchQueue.main.async {
+                        self.chats = messages
+                        getNames()
+                    }
+                case .failure(let error):
+                    print("Error fetching messages: \(error)")
+                }
             }
 
         }
+        .sheet(
+            isPresented: $isTapped,
+            content: {
+                ChatView(partner: $partner)
+            }
+        )
     }
+
     private func getNames() {
         Task {
             do {
@@ -139,8 +175,4 @@ struct HomeView: View {
         }
     }
 
-}
-
-#Preview {
-    HomeView()
 }
