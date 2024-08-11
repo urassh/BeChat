@@ -39,6 +39,7 @@
 		72A8E8EF2C6821C60058AA93 /* FriendProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A8E8EE2C6821C60058AA93 /* FriendProtocol.swift */; };
 		72A8E8F12C6821D60058AA93 /* FriendStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A8E8F02C6821D60058AA93 /* FriendStore.swift */; };
 		72A8E8F32C6858090058AA93 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A8E8F22C6858090058AA93 /* Notification.swift */; };
+		72A8E8F82C687D7E0058AA93 /* PushNotificationSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A8E8F72C687D7E0058AA93 /* PushNotificationSender.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -69,6 +70,7 @@
 		72A8E8F02C6821D60058AA93 /* FriendStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendStore.swift; sourceTree = "<group>"; };
 		72A8E8F22C6858090058AA93 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		72A8E8F62C6867090058AA93 /* BeChat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BeChat.entitlements; sourceTree = "<group>"; };
+		72A8E8F72C687D7E0058AA93 /* PushNotificationSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationSender.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +125,7 @@
 				102B20442C60722C00DCE393 /* Preview Content */,
 				102B204C2C60730300DCE393 /* GoogleService-Info.plist */,
 				102B203E2C60722B00DCE393 /* BeChatApp.swift */,
+				72A8E8F72C687D7E0058AA93 /* PushNotificationSender.swift */,
 			);
 			path = BeChat;
 			sourceTree = "<group>";
@@ -340,6 +343,7 @@
 				72A8E8EF2C6821C60058AA93 /* FriendProtocol.swift in Sources */,
 				72A8E8D92C6719990058AA93 /* ChatView.swift in Sources */,
 				102B206B2C607C9F00DCE393 /* MessageStore.swift in Sources */,
+				72A8E8F82C687D7E0058AA93 /* PushNotificationSender.swift in Sources */,
 				102B20642C60782100DCE393 /* Message.swift in Sources */,
 				102B20612C6077E500DCE393 /* MessageProtocol.swift in Sources */,
 				72A8E8DE2C671ACF0058AA93 /* MessageimageView.swift in Sources */,

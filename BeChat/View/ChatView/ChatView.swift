@@ -8,6 +8,7 @@ struct ChatView: View {
     @State private var uid = Auth.auth().currentUser?.uid ?? ""
     @Binding var partner: String
     @State private var repository: MessageProtocol = MessageStore()
+    @State var token = ""
     
     var body: some View {
         VStack {
@@ -48,6 +49,19 @@ struct ChatView: View {
                     )
                     
                     repository.send(with: message)
+                    // 通知を送信
+                    let payload: [String: Any] = [
+                        "to": token,
+                        "notification": [
+                            "title": "新しいメッセージ",
+                            "body": message.contents,
+                            "sound": "default"
+                        ],
+                        "data": [
+                            "chat_id": message.id.uuidString
+                        ]
+                    ]
+                    PushNotificationSender().sendFCMNotification(payload: payload)
                     chat = ""
                 }) {
                     Image(systemName: "paperplane.fill")
@@ -57,18 +71,28 @@ struct ChatView: View {
         }
         .padding()
         .onAppear {
-            repository.fetchAll(for: partner) { result in
+            repository.getToken(for: partner) { result in
                 switch result {
-                case .success(let messages):
-                    DispatchQueue.main.async {
-                        self.messages = messages
-                    }
+                case .success(let tokens):
+                    token = tokens
+                    print(tokens)
                 case .failure(let error):
                     print("Error fetching messages: \(error)")
+                }
+                repository.fetchAll(for: partner) { result in
+                    switch result {
+                    case .success(let messages):
+                        DispatchQueue.main.async {
+                            self.messages = messages
+                        }
+                    case .failure(let error):
+                        print("Error fetching messages: \(error)")
+                    }
                 }
             }
         }
     }
+   
 }
 
 #Preview {
