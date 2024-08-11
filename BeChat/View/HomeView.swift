@@ -9,16 +9,16 @@ import FirebaseAuth
 import SwiftUI
 
 struct HomeView: View {
+    @Binding var homePath: [HomePath]
+
     @State var isTapped = false
-    @State var partner = ""
+    @State var isFriend = false
+    @State var partnerUID = ""
     @State var partnerName = ""
     @State private var repository: AuthProtocol = AuthImpl()
     @State private var messageRepository: MessageProtocol = MessageStore()
-    @State var uid = Auth.auth().currentUser?.uid ?? ""
     @State private var chats = [Chat]()
     @State var names = [String: String]()
-    @State var isFriend = false
-    @Binding var homePath: [HomePath]
 
     var body: some View {
         VStack {
@@ -39,15 +39,15 @@ struct HomeView: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 20) {
                     ForEach(chats) { chat in
+                        let uid = Auth.auth().currentUser!.uid
                         let partnerId = chat.from_id == uid ? chat.to_id : chat.from_id
                         let partnerName = names[partnerId] ?? "Loading...！"
                         let imageUrl = chat.last_image
 
-                        CardView(name: .constant(partnerName), imageURL: .constant(imageUrl))
+                        CardView(name: partnerName, imageURL: imageUrl)
                             .onTapGesture {
-                                if chat.from_id != uid {
-                                    partner = chat.from_id
-                                }
+                                partnerUID = chat.from_id
+                                isTapped = true
                             }
                     }
                     .padding()
@@ -75,7 +75,7 @@ struct HomeView: View {
                 return
             }
 
-            print("uid : ", Auth.auth().currentUser!.uid)
+            let uid = Auth.auth().currentUser!.uid
 
             messageRepository.fetchChatAll(for: uid) { result in
                 switch result {
@@ -90,18 +90,12 @@ struct HomeView: View {
             }
 
         }
-        .sheet(
-            isPresented: $isTapped,
-            content: {
-                ChatView(partner: $partner)
-            }
-        )
-        .sheet(
-            isPresented: $isFriend,
-            content: {
-                FriendView()
-            }
-        )
+        .sheet(isPresented: $isTapped) {
+            ChatView(partner: partnerUID)
+        }
+        .sheet(isPresented: $isFriend) {
+            FriendView()
+        }
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button(action: {
@@ -119,6 +113,7 @@ struct HomeView: View {
             do {
                 var nameDict = [String: String]()
                 for chat in chats {
+                    let uid = Auth.auth().currentUser!.uid
                     let partnerId = chat.from_id == uid ? chat.to_id : chat.from_id
                     if nameDict[partnerId] == nil {
                         let name = await repository.getName(uid: partnerId)

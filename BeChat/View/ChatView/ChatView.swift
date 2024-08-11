@@ -3,10 +3,11 @@ import FirebaseCore
 import SwiftUI
 
 struct ChatView: View {
+    let partner: String
+
     @State var chat = ""
     @State var messages = [TextMessage]()
     @State private var uid = Auth.auth().currentUser?.uid ?? ""
-    @Binding var partner: String
     @State private var repository: MessageProtocol = MessageStore()
 
     var sortedMessages: [TextMessage] {
@@ -75,7 +76,7 @@ struct ChatView: View {
 }
 
 #Preview {
-    ChatView(partner: .constant(""))
+    ChatView(partner: "")
 }
 
 struct MessageView: View {

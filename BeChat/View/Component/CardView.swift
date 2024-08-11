@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct CardView: View {
-    @Binding var name: String
-    @Binding var imageURL: String
+    let name: String
+    let imageURL: String
+
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
@@ -52,5 +53,5 @@ struct CardView: View {
 }
 
 #Preview {
-    CardView(name: .constant("saki"), imageURL: .constant(""))
+    CardView(name: "saki", imageURL: "")
 }
