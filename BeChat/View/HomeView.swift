@@ -19,6 +19,7 @@ struct HomeView: View {
     @State var names = [String: String]()
     @State var isFriend = false
     @Binding var homePath: [HomePath]
+    
     var body: some View {
         VStack {
             Divider()
@@ -51,63 +52,8 @@ struct HomeView: View {
                     }
                     .padding()
                 }
-
-                NavigationLink(destination: DrawView()) {
-                    Image(systemName: "paperplane.fill")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 40, height: 40)
-                        .foregroundColor(.white)
-                        .padding()
-                        .background(Color.cyan)
-                        .clipShape(Circle())
-                        .shadow(radius: 10)
-                        .padding(.top, 80)
-                }
-
-                Spacer()
-                    .sheet(
-                        isPresented: $isTapped,
-                        content: {
-                            ChatView(partner: $partner)
-                        }
-                    )
-                    .sheet(
-                        isPresented: $isFriend,
-                        content: {
-                            FriendView()
-                        }
-                    )
-
-                    .onAppear {
-
-                        messageRepository.fetchChatAll(for: uid) { result in
-                            switch result {
-                            case .success(let messages):
-                                DispatchQueue.main.async {
-                                    self.chats = messages
-                                    getNames()
-                                    partner = chat.to_id
-                                }
-                                isTapped = true
-                            }
-                        }
-
-                    }
-                    .toolbar {
-
-                        ToolbarItem(placement: .navigationBarLeading) {
-                            Button(action: {
-                                isFriend = true
-
-                            }) {
-                                Image(systemName: "person.fill.badge.plus")
-                            }
-                        }
-                    }
-                }
-                .padding()
-
+            }
+            
             NavigationLink(destination: DrawView(homePath: $homePath)) {
                 Image(systemName: "paperplane.fill")
                     .resizable()
@@ -150,6 +96,22 @@ struct HomeView: View {
                 ChatView(partner: $partner)
             }
         )
+        .sheet(
+            isPresented: $isFriend,
+            content: {
+                FriendView()
+            }
+        )
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(action: {
+                    isFriend = true
+
+                }) {
+                    Image(systemName: "person.fill.badge.plus")
+                }
+            }
+        }
     }
 
     private func getNames() {
