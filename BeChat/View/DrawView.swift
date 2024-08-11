@@ -20,35 +20,39 @@ struct DrawView: View {
     @Environment(\.presentationMode) var presentation
     
     var body: some View {
-        
-        penViewInstance
-            .toolbar {
-                
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button(action: {
-                        penViewInstance.undo()
-                    }) {
-                        Image(systemName: "arrowshape.turn.up.backward.circle")
+        ZStack{
+            
+            penViewInstance
+                .navigationTitle("\(partner.name)さんに送ろう！")
+                .toolbar {
+                    
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button(action: {
+                            penViewInstance.undo()
+                        }) {
+                            Image(systemName: "arrowshape.turn.up.backward.circle")
+                        }
+                    }
+                    
+                    //送信
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button(action: {
+                            image = penViewInstance.saveImage()
+                            let imageMessage = ImageMessage(
+                                id: UUID(), from_id: uid, to_id: partner.uid,
+                                image: image, timestamp: Timestamp())
+                            
+                            repository.send(with: imageMessage)
+                            self.presentation.wrappedValue.dismiss()
+                            
+                        }) {
+                            Image(systemName: "paperplane.fill")
+                        }
                     }
                 }
-                
-                //送信
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: {
-                        image = penViewInstance.saveImage()
-                        let imageMessage = ImageMessage(
-                            id: UUID(), from_id: uid, to_id: partner.uid,
-                            image: image, timestamp: Timestamp())
-                        
-                        repository.send(with: imageMessage)
-                        self.presentation.wrappedValue.dismiss()
-                        
-                    }) {
-                        Image(systemName: "paperplane.fill")
-                    }
-                }
-            }
+        }
     }
+        
     
 }
 

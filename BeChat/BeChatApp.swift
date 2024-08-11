@@ -66,7 +66,7 @@ extension AppDelegate: MessagingDelegate {
             print("FCM registration token: \(token)")
           let db = Firestore.firestore()
               if let uid = Auth.auth().currentUser?.uid {
-                  db.collection("users").document(uid)
+                  db.collection("users").document(uid).updateData(["fcm": token])
               }
           }
         }
