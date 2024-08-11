@@ -13,16 +13,15 @@ import SwiftUI
 struct DrawView: View {
     @State private var penViewInstance = PenView()
     @State private var image: UIImage = UIImage(named: "sample")!
-
     @State private var repository: MessageProtocol = MessageStore()
-    @State var uid = (Auth.auth().currentUser?.uid ?? "12345")
+
+    @Binding var homePath: [HomePath]
+
     @Environment(\.presentationMode) var presentation
 
     var body: some View {
-
         penViewInstance
             .toolbar {
-
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button(action: {
                         penViewInstance.undo()
@@ -34,14 +33,21 @@ struct DrawView: View {
                 //送信
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
+                        if Auth.auth().currentUser == nil, Auth.auth().currentUser!.uid.isEmpty {
+                            homePath.removeLast(homePath.count)
+                            return
+                        }
+
+                        let uid = Auth.auth().currentUser!.uid
+
                         image = penViewInstance.saveImage()
                         let imageMessage = ImageMessage(
-                            id: UUID(), from_id: "Jc92RwR8XLVPxU1N2GVtEPci2tu1", to_id: uid,
+                            id: UUID(), from_id: uid, to_id: uid,
                             image: image, timestamp: Timestamp())
 
                         repository.send(with: imageMessage)
-                        self.presentation.wrappedValue.dismiss()
 
+                        homePath.append(.home)
                     }) {
                         Image(systemName: "paperplane.fill")
                     }

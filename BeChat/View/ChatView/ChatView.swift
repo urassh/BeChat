@@ -9,18 +9,21 @@ struct ChatView: View {
     @Binding var partner: String
     @State private var repository: MessageProtocol = MessageStore()
 
+    var sortedMessages: [TextMessage] {
+        return messages.sorted { $0.timestamp.dateValue() > $1.timestamp.dateValue() }
+    }
+
     var body: some View {
         VStack {
             Spacer(minLength: 30)
 
             ScrollView(.vertical) {
-                ForEach(messages, id: \.id) { message in
+                ForEach(sortedMessages.reversed(), id: \.id) { message in
                     HStack {
                         if uid == message.to_id {
                             Spacer()
                             MessageView(
                                 message: message, color: Color(red: 0.9, green: 0.9, blue: 0.97))
-
                         }
                         else {
                             MessageView(
@@ -74,6 +77,7 @@ struct ChatView: View {
 #Preview {
     ChatView(partner: .constant(""))
 }
+
 struct MessageView: View {
     let message: TextMessage
     @State var color: Color
@@ -92,7 +96,6 @@ struct MessageView: View {
             }
         }
         else {
-            // テキストメッセージを表示
             TextView(
                 text: message.contents,
                 color: color
