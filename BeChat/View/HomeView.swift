@@ -18,6 +18,18 @@ struct HomeView: View {
     @State private var chats = [Chat]()
     @State var names = [String: String]()
     @State var isFriend = false
+    
+    init(){
+          let center = UNUserNotificationCenter.current()
+          center.requestAuthorization(options: .alert) { granted, error in
+              if granted {
+                  print("許可されました！")
+              }else{
+                  print("拒否されました...")
+              }
+          }
+      }
+      
     var body: some View {
         NavigationView {
             VStack {
@@ -85,6 +97,7 @@ struct HomeView: View {
                     )
 
                     .onAppear {
+                        Notification().sendNotificationRequest()
 
                         messageRepository.fetchChatAll(for: uid) { result in
                             switch result {
