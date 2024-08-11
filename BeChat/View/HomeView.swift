@@ -19,7 +19,7 @@ struct HomeView: View {
     @State var names = [String: String]()
     @State var isFriend = false
     @Binding var homePath: [HomePath]
-    
+
     var body: some View {
         VStack {
             Divider()
@@ -48,12 +48,12 @@ struct HomeView: View {
                                 if chat.from_id != uid {
                                     partner = chat.from_id
                                 }
-                        }
+                            }
                     }
                     .padding()
                 }
             }
-            
+
             NavigationLink(destination: DrawView(homePath: $homePath)) {
                 Image(systemName: "paperplane.fill")
                     .resizable()
